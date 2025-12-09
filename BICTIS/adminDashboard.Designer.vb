@@ -1,4 +1,5 @@
-﻿Imports SysChart = System.Windows.Forms.DataVisualization.Charting
+﻿' ALIAS TO FIX CHART ERRORS
+Imports SysChart = System.Windows.Forms.DataVisualization.Charting
 
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class adminDashboard
@@ -48,9 +49,9 @@ Partial Class adminDashboard
         Me.pnlLogo.SuspendLayout()
         Me.SuspendLayout()
         '
-        'pnlBorder (The Frame)
+        'pnlBorder (This creates the visible border around the form)
         '
-        Me.pnlBorder.BackColor = System.Drawing.Color.White
+        Me.pnlBorder.BackColor = System.Drawing.Color.WhiteSmoke
         Me.pnlBorder.Controls.Add(Me.pnlContainer)
         Me.pnlBorder.Controls.Add(Me.pnlHeader)
         Me.pnlBorder.Controls.Add(Me.pnlSidebar)
@@ -243,7 +244,7 @@ Partial Class adminDashboard
         'pnlLogo
         '
         Me.pnlLogo.BackColor = System.Drawing.Color.FromArgb(34, 49, 63)
-        Me.pnlLogo.Controls.Add(lblLogo)
+        Me.pnlLogo.Controls.Add(Me.lblLogo)
         Me.pnlLogo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pnlLogo.Location = New System.Drawing.Point(0, 0)
         Me.pnlLogo.Name = "pnlLogo"
@@ -263,7 +264,7 @@ Partial Class adminDashboard
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.DimGray
+        Me.BackColor = System.Drawing.Color.DarkGray
         Me.ClientSize = New System.Drawing.Size(1000, 600)
         Me.Controls.Add(Me.pnlBorder)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
@@ -293,8 +294,8 @@ Partial Class adminDashboard
     Friend WithEvents lblLogo As Label
     Friend WithEvents btnBlotter As Button
     Friend WithEvents btnResidents As Button
-    Friend WithEvents btnLogout As Button
     Friend WithEvents btnClearance As Button
+    Friend WithEvents btnLogout As Button
     Friend WithEvents pnlHeader As Panel
     Friend WithEvents lblPageTitle As Label
     Friend WithEvents pnlContainer As Panel
@@ -304,5 +305,6 @@ Partial Class adminDashboard
     Friend WithEvents pnlCard2 As Panel
     Friend WithEvents lblPendingCases As Label
     Friend WithEvents Label3 As Label
+    ' Chart with ALIAS
     Friend WithEvents chartIncidents As SysChart.Chart
 End Class
