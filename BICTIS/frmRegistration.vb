@@ -2,34 +2,31 @@
 
 Public Class frmRegistration
     Private Sub btnRegister_Click(sender As Object, e As EventArgs) Handles btnRegister.Click
-        ' 1. Validate
         If txtUsername.Text = "" Or txtPassword.Text = "" Or txtFullName.Text = "" Then
-            MessageBox.Show("All fields are required.", "Missing Info", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            MessageBox.Show("All fields required.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
         End If
 
         If txtPassword.Text <> txtConfirmPass.Text Then
-            MessageBox.Show("Passwords do not match.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            MessageBox.Show("Passwords do not match.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
         End If
 
-        ' 2. Check Duplicates
         Dim checkParams As New Dictionary(Of String, Object)
         checkParams.Add("@user", txtUsername.Text)
         If Session.GetCount("SELECT COUNT(*) FROM tbl_Users WHERE Username=@user", checkParams) > 0 Then
-            MessageBox.Show("This Username is already taken.", "Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBox.Show("Username taken.", "Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Exit Sub
         End If
 
-        ' 3. Create Account (Always Role = 'User')
-        Dim query As String = "INSERT INTO tbl_Users (Username, [Password], FullName, Role, IsActive) VALUES (@user, @pass, @full, 'User', True)"
+        Dim query As String = "INSERT INTO tbl_Users (Username, [Password], Role, FullName, IsActive) VALUES (@user, @pass, 'User', @full, True)"
         Dim params As New Dictionary(Of String, Object)
         params.Add("@user", txtUsername.Text)
         params.Add("@pass", txtPassword.Text)
         params.Add("@full", txtFullName.Text)
 
         If Session.ExecuteQuery(query, params) Then
-            MessageBox.Show("Account successfully created! Please login.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBox.Show("Account Created! Please Login.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Dim login As New frmLogin()
             login.Show()
             Me.Close()

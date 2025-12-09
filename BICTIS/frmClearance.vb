@@ -13,7 +13,7 @@
         Dim cid As Integer = Convert.ToInt32(dgvRequests.SelectedRows(0).Cells("ClearanceID").Value)
 
         Session.ExecuteQuery("UPDATE tbl_Clearances SET Status='Approved' WHERE ClearanceID=" & cid)
-        MessageBox.Show("Clearance Approved! Printing...", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        MessageBox.Show("Approved & Printed.", "Success")
         LoadRequests()
     End Sub
 
@@ -21,7 +21,7 @@
         If dgvRequests.SelectedRows.Count = 0 Then Exit Sub
         Dim cid As Integer = Convert.ToInt32(dgvRequests.SelectedRows(0).Cells("ClearanceID").Value)
 
-        If MessageBox.Show("Reject request?", "Confirm", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+        If MessageBox.Show("Reject?", "Confirm", MessageBoxButtons.YesNo) = DialogResult.Yes Then
             Session.ExecuteQuery("UPDATE tbl_Clearances SET Status='Rejected' WHERE ClearanceID=" & cid)
             LoadRequests()
         End If

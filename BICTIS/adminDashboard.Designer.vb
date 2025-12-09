@@ -1,4 +1,7 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿' USE THIS ALIAS TO FIX THE CHART ERROR
+Imports SysChart = System.Windows.Forms.DataVisualization.Charting
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class adminDashboard
     Inherits System.Windows.Forms.Form
 
@@ -15,9 +18,9 @@ Partial Class adminDashboard
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim ChartArea1 As SysChart.ChartArea = New SysChart.ChartArea()
+        Dim Legend1 As SysChart.Legend = New SysChart.Legend()
+        Dim Series1 As SysChart.Series = New SysChart.Series()
         Me.pnlSidebar = New System.Windows.Forms.Panel()
         Me.btnLogout = New System.Windows.Forms.Button()
         Me.btnBlotter = New System.Windows.Forms.Button()
@@ -267,5 +270,6 @@ Partial Class adminDashboard
     Friend WithEvents pnlCard2 As Panel
     Friend WithEvents lblPendingCases As Label
     Friend WithEvents Label3 As Label
-    Friend WithEvents chartIncidents As System.Windows.Forms.DataVisualization.Charting.Chart
+    ' IMPORTANT: Use the Alias here!
+    Friend WithEvents chartIncidents As SysChart.Chart
 End Class

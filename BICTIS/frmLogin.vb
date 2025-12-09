@@ -2,13 +2,11 @@
 
 Public Class frmLogin
     Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
-        ' 1. Validate Input
         If txtUsername.Text = "" Or txtPassword.Text = "" Then
-            MessageBox.Show("Please enter your credentials.", "Required", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            MessageBox.Show("Please enter credentials.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
         End If
 
-        ' 2. Authenticate
         Dim query As String = "SELECT * FROM tbl_Users WHERE Username=@user AND [Password]=@pass"
         Dim params As New Dictionary(Of String, Object)
         params.Add("@user", txtUsername.Text)
@@ -17,15 +15,13 @@ Public Class frmLogin
         Dim dt As DataTable = Session.GetDataTable(query, params)
 
         If dt.Rows.Count > 0 Then
-            ' 3. Capture Session
             Session.CurrentUserID = Convert.ToInt32(dt.Rows(0)("UserID"))
             Session.CurrentUserRole = dt.Rows(0)("Role").ToString()
             Session.CurrentUserName = dt.Rows(0)("Username").ToString()
             Session.CurrentFullName = dt.Rows(0)("FullName").ToString()
 
-            MessageBox.Show("Login Successful! Welcome, " & Session.CurrentFullName, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBox.Show("Login Successful! Welcome " & Session.CurrentFullName, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-            ' 4. Route based on Role
             If Session.CurrentUserRole = "Admin" Or Session.CurrentUserRole = "Secretary" Then
                 Dim dash As New adminDashboard()
                 dash.Show()
