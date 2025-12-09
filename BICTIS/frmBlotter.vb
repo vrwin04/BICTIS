@@ -8,61 +8,38 @@ Public Class frmBlotter
     End Sub
 
     Private Sub LoadDropdowns()
-        ' 1. SETUP RESPONDENTS (The Residents being accused)
-        ' We load ONLY 'User' roles from the database
+        ' 1. SETUP RESPONDENTS (The Residents)
         Dim dt As DataTable = Session.GetDataTable("SELECT UserID, FullName FROM tbl_Users WHERE Role='User'")
         cbRespondent.DataSource = dt
         cbRespondent.DisplayMember = "FullName"
         cbRespondent.ValueMember = "UserID"
 
-        ' 2. SETUP COMPLAINANTS (The Departments filing the case)
-        ' Instead of loading people, we load LGU Departments/Units
-        cbComplainant.DataSource = Nothing
+        ' 2. SETUP COMPLAINANTS (Departments)
         cbComplainant.Items.Clear()
-        cbComplainant.Items.Add("Peace and Order Committee")
-        cbComplainant.Items.Add("Lupon Tagapamayapa")
-        cbComplainant.Items.Add("Barangay Health Office")
-        cbComplainant.Items.Add("Violence Against Women (VAWC) Desk")
-        cbComplainant.Items.Add("Barangay Tanod / Security")
-        cbComplainant.Items.Add("Office of the Barangay Captain")
-        cbComplainant.SelectedIndex = 0 ' Default selection
+        cbComplainant.Items.AddRange(New String() {"Peace and Order Committee", "Lupon Tagapamayapa", "Barangay Health Office", "VAWC Desk", "Barangay Tanod", "Office of the Captain"})
+        cbComplainant.SelectedIndex = 0
     End Sub
 
     Private Sub LoadIncidents()
-        ' Display the list. Note: We use the Admin's name or Dept in display if needed.
-        ' For simplicity, we just show the Incident Type and Respondent.
-        Dim sql As String = "SELECT i.IncidentID, i.IncidentType, u2.FullName AS Respondent, i.Status, i.IncidentDate, i.Narrative " &
-                            "FROM tbl_Incidents i " &
-                            "LEFT JOIN tbl_Users u2 ON i.RespondentID = u2.UserID " &
-                            "ORDER BY i.IncidentID DESC"
+        ' Display Cases
+        Dim sql As String = "SELECT i.IncidentID, i.IncidentType, u2.FullName AS Respondent, i.Status, i.IncidentDate, i.Narrative FROM tbl_Incidents i LEFT JOIN tbl_Users u2 ON i.RespondentID = u2.UserID ORDER BY i.IncidentID DESC"
         dgvCases.DataSource = Session.GetDataTable(sql)
     End Sub
 
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
-        ' Validation
-        If cbRespondent.SelectedValue Is Nothing Then
-            MessageBox.Show("Please select a Resident (Respondent).", "Missing Info", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        If cbRespondent.SelectedValue Is Nothing Or txtType.Text = "" Then
+            MessageBox.Show("Please complete all fields.", "Missing Info", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
         End If
 
-        If txtType.Text = "" Then
-            MessageBox.Show("Please enter the Type of Incident (e.g. Curfew, Noise).", "Missing Info", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Exit Sub
-        End If
-
-        ' FILE THE CASE
-        ' Logic: 
-        ' - ComplainantID = The Current Logged-in Admin (since they are encoding it)
-        ' - Narrative = We prepend the Department Name so we know who filed it.
-
+        ' Save Dept Name in Narrative
         Dim department As String = cbComplainant.Text
         Dim finalNarrative As String = "[Filed by: " & department & "] " & txtNarrative.Text
 
-        Dim query As String = "INSERT INTO tbl_Incidents (ComplainantID, RespondentID, IncidentType, Narrative, Status, IncidentDate) " &
-                              "VALUES (@comp, @resp, @type, @narr, @stat, @date)"
+        Dim query As String = "INSERT INTO tbl_Incidents (ComplainantID, RespondentID, IncidentType, Narrative, Status, IncidentDate) VALUES (@comp, @resp, @type, @narr, @stat, @date)"
 
         Dim params As New Dictionary(Of String, Object)
-        params.Add("@comp", Session.CurrentUserID) ' The Admin encoding this
+        params.Add("@comp", Session.CurrentUserID) ' Admin ID
         params.Add("@resp", cbRespondent.SelectedValue)
         params.Add("@type", txtType.Text)
         params.Add("@narr", finalNarrative)
@@ -70,13 +47,7 @@ Public Class frmBlotter
         params.Add("@date", DateTime.Now.ToString())
 
         If Session.ExecuteQuery(query, params) Then
-            MessageBox.Show("Blotter Case Filed Successfully!" & vbCrLf &
-                            "Respondent: " & cbRespondent.Text & vbCrLf &
-                            "Department: " & department & vbCrLf &
-                            "Status: " & cbStatus.Text,
-                            "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-            ' Refresh List and Clear Fields
+            MessageBox.Show("Case Filed! Respondent blocked from clearances.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
             LoadIncidents()
             txtType.Clear()
             txtNarrative.Clear()
@@ -84,21 +55,13 @@ Public Class frmBlotter
     End Sub
 
     Private Sub btnResolve_Click(sender As Object, e As EventArgs) Handles btnResolve.Click
-        If dgvCases.SelectedRows.Count = 0 Then
-            MessageBox.Show("Please select a case from the list to resolve.", "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Exit Sub
-        End If
-
+        If dgvCases.SelectedRows.Count = 0 Then Exit Sub
         Dim id As Integer = Convert.ToInt32(dgvCases.SelectedRows(0).Cells("IncidentID").Value)
-        Dim respondentName As String = dgvCases.SelectedRows(0).Cells("Respondent").Value.ToString()
 
-        If MessageBox.Show("Are you sure you want to mark this case as RESOLVED?" & vbCrLf & vbCrLf &
-                           "This will remove the block on " & respondentName & " for clearances.",
-                           "Confirm Resolution", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-
+        If MessageBox.Show("Mark case as RESOLVED?", "Confirm", MessageBoxButtons.YesNo) = DialogResult.Yes Then
             Session.ExecuteQuery("UPDATE tbl_Incidents SET Status='Resolved' WHERE IncidentID=" & id)
             LoadIncidents()
-            MessageBox.Show("Case Closed. The resident is now cleared.", "Updated", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBox.Show("Case Resolved.", "Updated")
         End If
     End Sub
 

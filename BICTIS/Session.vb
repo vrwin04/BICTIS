@@ -7,7 +7,7 @@ Public Module Session
     ' =========================================================
     ' 1. CONFIGURATION
     ' =========================================================
-    ' Automatically finds the database in the bin/debug folder
+    ' Automatically finds BICTIS_DB.accdb in your bin/debug folder
     Public dbFile As String = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "BICTIS_DB.accdb")
     Private ReadOnly connectionString As String = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & dbFile & ";Persist Security Info=False;"
 
@@ -20,10 +20,10 @@ Public Module Session
     Public CurrentFullName As String = ""
 
     ' =========================================================
-    ' 3. DATABASE METHODS (PROFESSIONAL GRADE)
+    ' 3. DATABASE METHODS
     ' =========================================================
 
-    ' READ DATA (Returns a DataTable)
+    ' READ DATA (Returns a DataTable for Grids/Login)
     Public Function GetDataTable(query As String, Optional parameters As Dictionary(Of String, Object) = Nothing) As DataTable
         Dim dt As New DataTable()
         Using conn As New OleDbConnection(connectionString)
@@ -45,7 +45,7 @@ Public Module Session
         Return dt
     End Function
 
-    ' WRITE DATA (Returns True if successful)
+    ' WRITE DATA (Returns True if Insert/Update/Delete works)
     Public Function ExecuteQuery(query As String, Optional parameters As Dictionary(Of String, Object) = Nothing) As Boolean
         Using conn As New OleDbConnection(connectionString)
             Using cmd As New OleDbCommand(query, conn)
@@ -66,7 +66,7 @@ Public Module Session
         End Using
     End Function
 
-    ' COUNT DATA (Returns a single number)
+    ' COUNT DATA (Returns a single number for Stats)
     Public Function GetCount(query As String, Optional parameters As Dictionary(Of String, Object) = Nothing) As Integer
         Using conn As New OleDbConnection(connectionString)
             Using cmd As New OleDbCommand(query, conn)
