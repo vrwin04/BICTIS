@@ -15,6 +15,9 @@ Partial Class adminDashboard
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Me.pnlSidebar = New System.Windows.Forms.Panel()
         Me.btnLogout = New System.Windows.Forms.Button()
         Me.btnBlotter = New System.Windows.Forms.Button()
@@ -23,6 +26,7 @@ Partial Class adminDashboard
         Me.pnlHeader = New System.Windows.Forms.Panel()
         Me.lblPageTitle = New System.Windows.Forms.Label()
         Me.pnlContainer = New System.Windows.Forms.Panel()
+        Me.chartIncidents = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.pnlCard2 = New System.Windows.Forms.Panel()
         Me.lblPendingCases = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -33,6 +37,7 @@ Partial Class adminDashboard
         Me.pnlLogo.SuspendLayout()
         Me.pnlHeader.SuspendLayout()
         Me.pnlContainer.SuspendLayout()
+        CType(Me.chartIncidents, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnlCard2.SuspendLayout()
         Me.pnlCard1.SuspendLayout()
         Me.SuspendLayout()
@@ -75,7 +80,7 @@ Partial Class adminDashboard
         Me.btnBlotter.Padding = New System.Windows.Forms.Padding(15, 0, 0, 0)
         Me.btnBlotter.Size = New System.Drawing.Size(220, 50)
         Me.btnBlotter.TabIndex = 2
-        Me.btnBlotter.Text = "Incident Blotter"
+        Me.btnBlotter.Text = "Manage Blotter"
         Me.btnBlotter.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnBlotter.UseVisualStyleBackColor = True
         '
@@ -116,11 +121,12 @@ Partial Class adminDashboard
         Me.lblPageTitle.Name = "lblPageTitle"
         Me.lblPageTitle.Size = New System.Drawing.Size(157, 25)
         Me.lblPageTitle.TabIndex = 0
-        Me.lblPageTitle.Text = "Admin Overview"
+        Me.lblPageTitle.Text = "Analytics Overview"
         '
         'pnlContainer
         '
         Me.pnlContainer.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.pnlContainer.Controls.Add(Me.chartIncidents)
         Me.pnlContainer.Controls.Add(Me.pnlCard2)
         Me.pnlContainer.Controls.Add(Me.pnlCard1)
         Me.pnlContainer.Dock = System.Windows.Forms.DockStyle.Fill
@@ -128,6 +134,22 @@ Partial Class adminDashboard
         Me.pnlContainer.Name = "pnlContainer"
         Me.pnlContainer.Size = New System.Drawing.Size(780, 520)
         Me.pnlContainer.TabIndex = 2
+        '
+        'chartIncidents
+        '
+        ChartArea1.Name = "ChartArea1"
+        Me.chartIncidents.ChartAreas.Add(ChartArea1)
+        Legend1.Name = "Legend1"
+        Me.chartIncidents.Legends.Add(Legend1)
+        Me.chartIncidents.Location = New System.Drawing.Point(30, 180)
+        Me.chartIncidents.Name = "chartIncidents"
+        Series1.ChartArea = "ChartArea1"
+        Series1.Legend = "Legend1"
+        Series1.Name = "Series1"
+        Me.chartIncidents.Series.Add(Series1)
+        Me.chartIncidents.Size = New System.Drawing.Size(700, 300)
+        Me.chartIncidents.TabIndex = 2
+        Me.chartIncidents.Text = "Chart1"
         '
         'pnlCard2
         '
@@ -194,8 +216,8 @@ Partial Class adminDashboard
         Me.Controls.Add(Me.pnlHeader)
         Me.Controls.Add(Me.pnlSidebar)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
-        Me.Name = "adminDashboard"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Name = "adminDashboard"
         Me.Text = "Admin Dashboard"
         Me.pnlSidebar.ResumeLayout(False)
         Me.pnlLogo.ResumeLayout(False)
@@ -203,6 +225,7 @@ Partial Class adminDashboard
         Me.pnlHeader.ResumeLayout(False)
         Me.pnlHeader.PerformLayout()
         Me.pnlContainer.ResumeLayout(False)
+        CType(Me.chartIncidents, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnlCard2.ResumeLayout(False)
         Me.pnlCard2.PerformLayout()
         Me.pnlCard1.ResumeLayout(False)
@@ -225,4 +248,5 @@ Partial Class adminDashboard
     Friend WithEvents pnlCard2 As Panel
     Friend WithEvents lblPendingCases As Label
     Friend WithEvents Label3 As Label
+    Friend WithEvents chartIncidents As System.Windows.Forms.DataVisualization.Charting.Chart
 End Class
