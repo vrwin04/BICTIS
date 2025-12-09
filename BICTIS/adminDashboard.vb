@@ -1,6 +1,4 @@
-﻿' ALIAS TO FIX CHART ERRORS
-Imports SysChart = System.Windows.Forms.DataVisualization.Charting
-Imports System.Windows.Forms
+﻿Imports System.Windows.Forms
 Imports System.Data
 
 Public Class adminDashboard
@@ -24,6 +22,7 @@ Public Class adminDashboard
         Dim pending As Integer = Session.GetCount("SELECT COUNT(*) FROM tblIncidents WHERE Status='Pending'")
         lblPendingCases.Text = pending.ToString()
 
+        ' Visual Alert
         If pending > 0 Then
             lblPendingCases.ForeColor = Color.Red
         Else
@@ -35,14 +34,15 @@ Public Class adminDashboard
         Dim query As String = "SELECT IncidentType, COUNT(*) as [Count] FROM tblIncidents GROUP BY IncidentType"
         Dim dt As DataTable = Session.GetDataTable(query)
 
-        ' Safety check
+        ' Safety check for Chart Control
         If chartIncidents Is Nothing Then Exit Sub
 
         chartIncidents.Series.Clear()
         chartIncidents.Titles.Clear()
 
-        Dim series As New SysChart.Series("Incidents")
-        series.ChartType = SysChart.SeriesChartType.Column
+        ' USE FULL NAMES
+        Dim series As New System.Windows.Forms.DataVisualization.Charting.Series("Incidents")
+        series.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column
         series.IsValueShownAsLabel = True
         series.Color = Color.FromArgb(41, 128, 185)
 
@@ -58,8 +58,7 @@ Public Class adminDashboard
         chartIncidents.Titles.Add("Incident Distribution")
     End Sub
 
-    ' --- NAVIGATION BUTTONS ---
-
+    ' NAVIGATION
     Private Sub btnResidents_Click(sender As Object, e As EventArgs) Handles btnResidents.Click
         Dim frm As New frmManageResidents()
         frm.ShowDialog()
@@ -73,7 +72,6 @@ Public Class adminDashboard
         LoadChart()
     End Sub
 
-    ' THE FIXED CLEARANCE BUTTON
     Private Sub btnClearance_Click(sender As Object, e As EventArgs) Handles btnClearance.Click
         Dim frm As New frmClearance()
         frm.ShowDialog()

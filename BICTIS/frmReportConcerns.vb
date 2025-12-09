@@ -1,8 +1,9 @@
 ﻿Imports System.Collections.Generic
 
-Public Class frmReportConcerns
+' MUST BE "frmReportConcern" (Singular) to match Designer
+Public Class frmReportConcern
     Private Sub btnSubmit_Click(sender As Object, e As EventArgs) Handles btnSubmit.Click
-        ' FIX: Changed 'txtType' to 'cbType' to match the Designer
+        ' Use cbType because that is the name in Designer
         If cbType.Text = "" Or txtNarrative.Text = "" Then
             MessageBox.Show("Please fill in all details.", "Missing Info", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
@@ -14,7 +15,7 @@ Public Class frmReportConcerns
 
         Dim params As New Dictionary(Of String, Object)
         params.Add("@uid", Session.CurrentResidentID)
-        params.Add("@type", cbType.Text) ' FIX: Changed from txtType.Text to cbType.Text
+        params.Add("@type", cbType.Text)
         params.Add("@narr", txtNarrative.Text)
         params.Add("@date", DateTime.Now.ToString())
 

@@ -1,7 +1,4 @@
-﻿' ALIAS TO FIX CHART ERRORS
-Imports SysChart = System.Windows.Forms.DataVisualization.Charting
-
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class adminDashboard
     Inherits System.Windows.Forms.Form
 
@@ -18,9 +15,11 @@ Partial Class adminDashboard
 
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim ChartArea1 As SysChart.ChartArea = New SysChart.ChartArea()
-        Dim Legend1 As SysChart.Legend = New SysChart.Legend()
-        Dim Series1 As SysChart.Series = New SysChart.Series()
+        ' USE FULL NAMES TO PREVENT CRASH
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+
         Me.pnlBorder = New System.Windows.Forms.Panel()
         Me.pnlContainer = New System.Windows.Forms.Panel()
         Me.chartIncidents = New System.Windows.Forms.DataVisualization.Charting.Chart()
@@ -49,7 +48,7 @@ Partial Class adminDashboard
         Me.pnlLogo.SuspendLayout()
         Me.SuspendLayout()
         '
-        'pnlBorder (This creates the visible border around the form)
+        'pnlBorder
         '
         Me.pnlBorder.BackColor = System.Drawing.Color.WhiteSmoke
         Me.pnlBorder.Controls.Add(Me.pnlContainer)
@@ -264,7 +263,7 @@ Partial Class adminDashboard
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.DarkGray
+        Me.BackColor = System.Drawing.Color.DimGray
         Me.ClientSize = New System.Drawing.Size(1000, 600)
         Me.Controls.Add(Me.pnlBorder)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
@@ -305,6 +304,6 @@ Partial Class adminDashboard
     Friend WithEvents pnlCard2 As Panel
     Friend WithEvents lblPendingCases As Label
     Friend WithEvents Label3 As Label
-    ' Chart with ALIAS
-    Friend WithEvents chartIncidents As SysChart.Chart
+    ' IMPORTANT: Use Full Name Here
+    Friend WithEvents chartIncidents As System.Windows.Forms.DataVisualization.Charting.Chart
 End Class
