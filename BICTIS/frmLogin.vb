@@ -7,7 +7,8 @@ Public Class frmLogin
             Exit Sub
         End If
 
-        Dim query As String = "SELECT * FROM tbl_Users WHERE Username=@user AND [Password]=@pass"
+        ' UPDATED: Now queries tblResidents
+        Dim query As String = "SELECT * FROM tblResidents WHERE Username=@user AND [Password]=@pass"
         Dim params As New Dictionary(Of String, Object)
         params.Add("@user", txtUsername.Text)
         params.Add("@pass", txtPassword.Text)
@@ -15,12 +16,13 @@ Public Class frmLogin
         Dim dt As DataTable = Session.GetDataTable(query, params)
 
         If dt.Rows.Count > 0 Then
-            Session.CurrentUserID = Convert.ToInt32(dt.Rows(0)("UserID"))
+            ' UPDATED: Using ResidentID
+            Session.CurrentResidentID = Convert.ToInt32(dt.Rows(0)("ResidentID"))
             Session.CurrentUserRole = dt.Rows(0)("Role").ToString()
             Session.CurrentUserName = dt.Rows(0)("Username").ToString()
             Session.CurrentFullName = dt.Rows(0)("FullName").ToString()
 
-            MessageBox.Show("Login Successful! Welcome " & Session.CurrentFullName, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBox.Show("Welcome, " & Session.CurrentFullName, "Login Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             If Session.CurrentUserRole = "Admin" Or Session.CurrentUserRole = "Secretary" Then
                 Dim dash As New adminDashboard()

@@ -6,18 +6,22 @@ Public Class frmUser
     End Sub
 
     Private Sub btnRequest_Click(sender As Object, e As EventArgs) Handles btnRequest.Click
-        Dim checkSql As String = "SELECT COUNT(*) FROM tbl_Incidents WHERE RespondentID = @uid AND Status = 'Pending'"
+        ' 1. Check for Pending Case
+        Dim checkSql As String = "SELECT COUNT(*) FROM tblIncidents WHERE RespondentID = @uid AND Status = 'Pending'"
         Dim params As New Dictionary(Of String, Object)
-        params.Add("@uid", Session.CurrentUserID)
+        params.Add("@uid", Session.CurrentResidentID)
 
-        If Session.GetCount(checkSql, params) > 0 Then
-            MessageBox.Show("ACCESS DENIED. You have pending cases.", "Blocked", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        Dim activeCases As Integer = Session.GetCount(checkSql, params)
+
+        If activeCases > 0 Then
+            MessageBox.Show("ACCESS DENIED." & vbCrLf & "You have " & activeCases & " pending case(s).", "Clearance Blocked", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Exit Sub
         End If
 
-        Dim query As String = "INSERT INTO tbl_Clearances (ResidentID, Purpose, DateIssued, Status) VALUES (@uid, 'General', @date, 'Requested')"
+        ' 2. Submit Request
+        Dim query As String = "INSERT INTO tblClearances (ResidentID, Purpose, DateIssued, Status) VALUES (@uid, 'General', @date, 'Requested')"
         Dim insertParams As New Dictionary(Of String, Object)
-        insertParams.Add("@uid", Session.CurrentUserID)
+        insertParams.Add("@uid", Session.CurrentResidentID)
         insertParams.Add("@date", DateTime.Now.ToString())
 
         If Session.ExecuteQuery(query, insertParams) Then
@@ -26,12 +30,12 @@ Public Class frmUser
     End Sub
 
     Private Sub btnHistory_Click(sender As Object, e As EventArgs) Handles btnHistory.Click
-        Dim dt As DataTable = Session.GetDataTable("SELECT * FROM tbl_Clearances WHERE ResidentID=" & Session.CurrentUserID)
+        Dim dt As DataTable = Session.GetDataTable("SELECT * FROM tblClearances WHERE ResidentID=" & Session.CurrentResidentID)
         MessageBox.Show("You have " & dt.Rows.Count & " past records.", "Info")
     End Sub
 
     Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
-        Session.CurrentUserID = 0
+        Session.CurrentResidentID = 0
         Dim login As New frmLogin()
         login.Show()
         Me.Close()

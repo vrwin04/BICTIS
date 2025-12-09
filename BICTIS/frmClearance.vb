@@ -4,7 +4,7 @@
     End Sub
 
     Private Sub LoadRequests()
-        Dim sql As String = "SELECT c.ClearanceID, u.FullName, c.Purpose, c.DateIssued, c.Status FROM tbl_Clearances c INNER JOIN tbl_Users u ON c.ResidentID = u.UserID ORDER BY c.DateIssued DESC"
+        Dim sql As String = "SELECT c.ClearanceID, u.FullName, c.Purpose, c.DateIssued, c.Status FROM tblClearances c INNER JOIN tblResidents u ON c.ResidentID = u.ResidentID ORDER BY c.DateIssued DESC"
         dgvRequests.DataSource = Session.GetDataTable(sql)
     End Sub
 
@@ -12,7 +12,7 @@
         If dgvRequests.SelectedRows.Count = 0 Then Exit Sub
         Dim cid As Integer = Convert.ToInt32(dgvRequests.SelectedRows(0).Cells("ClearanceID").Value)
 
-        Session.ExecuteQuery("UPDATE tbl_Clearances SET Status='Approved' WHERE ClearanceID=" & cid)
+        Session.ExecuteQuery("UPDATE tblClearances SET Status='Approved' WHERE ClearanceID=" & cid)
         MessageBox.Show("Approved & Printed.", "Success")
         LoadRequests()
     End Sub
@@ -21,10 +21,8 @@
         If dgvRequests.SelectedRows.Count = 0 Then Exit Sub
         Dim cid As Integer = Convert.ToInt32(dgvRequests.SelectedRows(0).Cells("ClearanceID").Value)
 
-        If MessageBox.Show("Reject?", "Confirm", MessageBoxButtons.YesNo) = DialogResult.Yes Then
-            Session.ExecuteQuery("UPDATE tbl_Clearances SET Status='Rejected' WHERE ClearanceID=" & cid)
-            LoadRequests()
-        End If
+        Session.ExecuteQuery("UPDATE tblClearances SET Status='Rejected' WHERE ClearanceID=" & cid)
+        LoadRequests()
     End Sub
 
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click

@@ -4,7 +4,7 @@
     End Sub
 
     Private Sub LoadResidents(search As String)
-        Dim query As String = "SELECT UserID, Username, FullName, Role FROM tbl_Users WHERE Role='User'"
+        Dim query As String = "SELECT ResidentID, Username, FullName, Role FROM tblResidents WHERE Role='User'"
         If search <> "" Then
             query &= " AND (FullName LIKE '%" & search & "%' OR Username LIKE '%" & search & "%')"
         End If
@@ -17,11 +17,11 @@
 
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
         If dgvResidents.SelectedRows.Count = 0 Then Exit Sub
-        Dim uid As Integer = Convert.ToInt32(dgvResidents.SelectedRows(0).Cells("UserID").Value)
+        Dim uid As Integer = Convert.ToInt32(dgvResidents.SelectedRows(0).Cells("ResidentID").Value)
 
-        If MessageBox.Show("Delete this user?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) = DialogResult.Yes Then
-            Session.ExecuteQuery("DELETE FROM tbl_Users WHERE UserID=" & uid)
-            MessageBox.Show("User Deleted.", "Success")
+        If MessageBox.Show("Delete this resident?", "Confirm", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            Session.ExecuteQuery("DELETE FROM tblResidents WHERE ResidentID=" & uid)
+            MessageBox.Show("Deleted.", "Success")
             LoadResidents(txtSearch.Text)
         End If
     End Sub

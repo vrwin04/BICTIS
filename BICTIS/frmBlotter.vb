@@ -8,10 +8,11 @@ Public Class frmBlotter
     End Sub
 
     Private Sub LoadDropdowns()
-        Dim dt As DataTable = Session.GetDataTable("SELECT UserID, FullName FROM tbl_Users WHERE Role='User'")
+        ' Load Residents for Respondent Box
+        Dim dt As DataTable = Session.GetDataTable("SELECT ResidentID, FullName FROM tblResidents WHERE Role='User'")
         cbRespondent.DataSource = dt
         cbRespondent.DisplayMember = "FullName"
-        cbRespondent.ValueMember = "UserID"
+        cbRespondent.ValueMember = "ResidentID"
 
         cbComplainant.Items.Clear()
         cbComplainant.Items.AddRange(New String() {"Peace and Order Committee", "Lupon Tagapamayapa", "Barangay Health Office", "VAWC Desk", "Barangay Tanod", "Office of the Captain"})
@@ -19,7 +20,11 @@ Public Class frmBlotter
     End Sub
 
     Private Sub LoadIncidents()
-        Dim sql As String = "SELECT i.IncidentID, i.IncidentType, u2.FullName AS Respondent, i.Status, i.IncidentDate, i.Narrative FROM tbl_Incidents i LEFT JOIN tbl_Users u2 ON i.RespondentID = u2.UserID ORDER BY i.IncidentID DESC"
+        ' Join Incidents with Residents to show names
+        Dim sql As String = "SELECT i.IncidentID, i.IncidentType, u.FullName AS Respondent, i.Status, i.IncidentDate, i.Narrative " &
+                            "FROM tblIncidents i " &
+                            "LEFT JOIN tblResidents u ON i.RespondentID = u.ResidentID " &
+                            "ORDER BY i.IncidentID DESC"
         dgvCases.DataSource = Session.GetDataTable(sql)
     End Sub
 
@@ -30,10 +35,10 @@ Public Class frmBlotter
         End If
 
         Dim narrative As String = "[Filed by: " & cbComplainant.Text & "] " & txtNarrative.Text
-        Dim query As String = "INSERT INTO tbl_Incidents (ComplainantID, RespondentID, IncidentType, Narrative, Status, IncidentDate) VALUES (@comp, @resp, @type, @narr, @stat, @date)"
+        Dim query As String = "INSERT INTO tblIncidents (ComplainantID, RespondentID, IncidentType, Narrative, Status, IncidentDate) VALUES (@comp, @resp, @type, @narr, @stat, @date)"
 
         Dim params As New Dictionary(Of String, Object)
-        params.Add("@comp", Session.CurrentUserID)
+        params.Add("@comp", Session.CurrentResidentID) ' Admin ID
         params.Add("@resp", cbRespondent.SelectedValue)
         params.Add("@type", txtType.Text)
         params.Add("@narr", narrative)
@@ -53,9 +58,9 @@ Public Class frmBlotter
         Dim id As Integer = Convert.ToInt32(dgvCases.SelectedRows(0).Cells("IncidentID").Value)
 
         If MessageBox.Show("Mark RESOLVED?", "Confirm", MessageBoxButtons.YesNo) = DialogResult.Yes Then
-            Session.ExecuteQuery("UPDATE tbl_Incidents SET Status='Resolved' WHERE IncidentID=" & id)
+            Session.ExecuteQuery("UPDATE tblIncidents SET Status='Resolved' WHERE IncidentID=" & id)
             LoadIncidents()
-            MessageBox.Show("Case Resolved.", "Success")
+            MessageBox.Show("Case Resolved.", "Updated")
         End If
     End Sub
 
