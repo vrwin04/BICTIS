@@ -5,9 +5,7 @@ Partial Class frmRegistration
     <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
-            If disposing AndAlso components IsNot Nothing Then
-                components.Dispose()
-            End If
+            If disposing AndAlso components IsNot Nothing Then components.Dispose()
         Finally
             MyBase.Dispose(disposing)
         End Try
@@ -21,6 +19,7 @@ Partial Class frmRegistration
         Me.lblWelcome = New System.Windows.Forms.Label()
         Me.lblBrand = New System.Windows.Forms.Label()
         Me.pnlRight = New System.Windows.Forms.Panel()
+        Me.chkShowPass = New System.Windows.Forms.CheckBox()
         Me.btnClose = New System.Windows.Forms.Button()
         Me.lblLoginLink = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
@@ -41,24 +40,10 @@ Partial Class frmRegistration
         Me.pnlLeft.SuspendLayout()
         Me.pnlRight.SuspendLayout()
         Me.SuspendLayout()
-        Me.chkShowPass = New System.Windows.Forms.CheckBox()
-        '
-        ' chkShowPass
-        '
-        Me.chkShowPass.AutoSize = True
-        Me.chkShowPass.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.chkShowPass.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.chkShowPass.ForeColor = System.Drawing.Color.Gray
-        Me.chkShowPass.Location = New System.Drawing.Point(50, 380) ' Below Confirm Password line
-        Me.chkShowPass.Name = "chkShowPass"
-        Me.chkShowPass.Size = New System.Drawing.Size(108, 19)
-        Me.chkShowPass.TabIndex = 4
-        Me.chkShowPass.Text = "Show Password"
-        Me.chkShowPass.UseVisualStyleBackColor = True
         '
         'pnlLeft
         '
-        Me.pnlLeft.BackColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(152, Byte), Integer), CType(CType(219, Byte), Integer))
+        Me.pnlLeft.BackColor = System.Drawing.Color.FromArgb(52, 152, 219)
         Me.pnlLeft.Controls.Add(Me.lblWelcome)
         Me.pnlLeft.Controls.Add(Me.lblBrand)
         Me.pnlLeft.Dock = System.Windows.Forms.DockStyle.Left
@@ -92,6 +77,7 @@ Partial Class frmRegistration
         'pnlRight
         '
         Me.pnlRight.BackColor = System.Drawing.Color.White
+        Me.pnlRight.Controls.Add(Me.chkShowPass)
         Me.pnlRight.Controls.Add(Me.btnClose)
         Me.pnlRight.Controls.Add(Me.lblLoginLink)
         Me.pnlRight.Controls.Add(Me.Label5)
@@ -114,27 +100,39 @@ Partial Class frmRegistration
         Me.pnlRight.Name = "pnlRight"
         Me.pnlRight.Size = New System.Drawing.Size(450, 600)
         Me.pnlRight.TabIndex = 1
-        Me.pnlRight.Controls.Add(Me.chkShowPass)
+        '
+        'chkShowPass
+        '
+        Me.chkShowPass.AutoSize = True
+        Me.chkShowPass.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.chkShowPass.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.chkShowPass.ForeColor = System.Drawing.Color.Gray
+        Me.chkShowPass.Location = New System.Drawing.Point(50, 390)
+        Me.chkShowPass.Name = "chkShowPass"
+        Me.chkShowPass.Size = New System.Drawing.Size(108, 19)
+        Me.chkShowPass.TabIndex = 16
+        Me.chkShowPass.Text = "Show Password"
+        Me.chkShowPass.UseVisualStyleBackColor = True
         '
         'btnClose
         '
         Me.btnClose.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnClose.FlatAppearance.BorderSize = 0
         Me.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnClose.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.btnClose.Font = New System.Drawing.Font("Segoe UI", 14.0!, System.Drawing.FontStyle.Bold)
         Me.btnClose.ForeColor = System.Drawing.Color.Gray
         Me.btnClose.Location = New System.Drawing.Point(410, 0)
         Me.btnClose.Name = "btnClose"
         Me.btnClose.Size = New System.Drawing.Size(40, 40)
         Me.btnClose.TabIndex = 12
-        Me.btnClose.Text = "X"
+        Me.btnClose.Text = "×"
         Me.btnClose.UseVisualStyleBackColor = True
         '
         'lblTitle
         '
         Me.lblTitle.AutoSize = True
         Me.lblTitle.Font = New System.Drawing.Font("Segoe UI", 24.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblTitle.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(152, Byte), Integer), CType(CType(219, Byte), Integer))
+        Me.lblTitle.ForeColor = System.Drawing.Color.FromArgb(52, 152, 219)
         Me.lblTitle.Location = New System.Drawing.Point(42, 30)
         Me.lblTitle.Name = "lblTitle"
         Me.lblTitle.Size = New System.Drawing.Size(236, 45)
@@ -261,13 +259,13 @@ Partial Class frmRegistration
         '
         'btnRegister
         '
-        Me.btnRegister.BackColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(152, Byte), Integer), CType(CType(219, Byte), Integer))
+        Me.btnRegister.BackColor = System.Drawing.Color.FromArgb(52, 152, 219)
         Me.btnRegister.Cursor = System.Windows.Forms.Cursors.Hand
         Me.btnRegister.FlatAppearance.BorderSize = 0
         Me.btnRegister.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnRegister.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold)
         Me.btnRegister.ForeColor = System.Drawing.Color.White
-        Me.btnRegister.Location = New System.Drawing.Point(50, 420)
+        Me.btnRegister.Location = New System.Drawing.Point(50, 440)
         Me.btnRegister.Name = "btnRegister"
         Me.btnRegister.Size = New System.Drawing.Size(350, 50)
         Me.btnRegister.TabIndex = 5
@@ -279,7 +277,7 @@ Partial Class frmRegistration
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Segoe UI", 9.75!)
         Me.Label5.ForeColor = System.Drawing.Color.Gray
-        Me.Label5.Location = New System.Drawing.Point(100, 490)
+        Me.Label5.Location = New System.Drawing.Point(100, 510)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(159, 17)
         Me.Label5.TabIndex = 14
@@ -290,8 +288,8 @@ Partial Class frmRegistration
         Me.lblLoginLink.AutoSize = True
         Me.lblLoginLink.Cursor = System.Windows.Forms.Cursors.Hand
         Me.lblLoginLink.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold)
-        Me.lblLoginLink.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(152, Byte), Integer), CType(CType(219, Byte), Integer))
-        Me.lblLoginLink.Location = New System.Drawing.Point(265, 490)
+        Me.lblLoginLink.ForeColor = System.Drawing.Color.FromArgb(52, 152, 219)
+        Me.lblLoginLink.Location = New System.Drawing.Point(265, 510)
         Me.lblLoginLink.Name = "lblLoginLink"
         Me.lblLoginLink.Size = New System.Drawing.Size(73, 17)
         Me.lblLoginLink.TabIndex = 15
@@ -306,9 +304,8 @@ Partial Class frmRegistration
         Me.Controls.Add(Me.pnlRight)
         Me.Controls.Add(Me.pnlLeft)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
-        Me.Name = "frmRegistration"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Registration"
+        Me.Name = "frmRegistration"
         Me.pnlLeft.ResumeLayout(False)
         Me.pnlLeft.PerformLayout()
         Me.pnlRight.ResumeLayout(False)

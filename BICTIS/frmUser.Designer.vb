@@ -5,9 +5,7 @@ Partial Class frmUser
     <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
-            If disposing AndAlso components IsNot Nothing Then
-                components.Dispose()
-            End If
+            If disposing AndAlso components IsNot Nothing Then components.Dispose()
         Finally
             MyBase.Dispose(disposing)
         End Try
@@ -18,9 +16,9 @@ Partial Class frmUser
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.pnlSidebar = New System.Windows.Forms.Panel()
+        Me.btnLogout = New System.Windows.Forms.Button()
         Me.btnHistory = New System.Windows.Forms.Button()
         Me.btnRequest = New System.Windows.Forms.Button()
-        Me.btnLogout = New System.Windows.Forms.Button()
         Me.pnlLogo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pnlHeader = New System.Windows.Forms.Panel()
@@ -33,9 +31,9 @@ Partial Class frmUser
         Me.pnlContainer.SuspendLayout()
         Me.SuspendLayout()
         '
-        'pnlSidebar (Resident uses a Green/Teal theme to distinguish from Admin)
+        'pnlSidebar
         '
-        Me.pnlSidebar.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(150, Byte), Integer), CType(CType(136, Byte), Integer))
+        Me.pnlSidebar.BackColor = System.Drawing.Color.FromArgb(0, 150, 136)
         Me.pnlSidebar.Controls.Add(Me.btnLogout)
         Me.pnlSidebar.Controls.Add(Me.btnHistory)
         Me.pnlSidebar.Controls.Add(Me.btnRequest)
@@ -46,40 +44,19 @@ Partial Class frmUser
         Me.pnlSidebar.Size = New System.Drawing.Size(220, 600)
         Me.pnlSidebar.TabIndex = 0
         '
-        'pnlLogo
+        'btnLogout
         '
-        Me.pnlLogo.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(121, Byte), Integer), CType(CType(107, Byte), Integer))
-        Me.pnlLogo.Controls.Add(Me.Label1)
-        Me.pnlLogo.Dock = System.Windows.Forms.DockStyle.Top
-        Me.pnlLogo.Location = New System.Drawing.Point(0, 0)
-        Me.pnlLogo.Name = "pnlLogo"
-        Me.pnlLogo.Size = New System.Drawing.Size(220, 80)
-        Me.pnlLogo.TabIndex = 0
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 14.0!, System.Drawing.FontStyle.Bold)
-        Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(40, 25)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Text = "RESIDENT"
-        '
-        'btnRequest
-        '
-        Me.btnRequest.Dock = System.Windows.Forms.DockStyle.Top
-        Me.btnRequest.FlatAppearance.BorderSize = 0
-        Me.btnRequest.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnRequest.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.btnRequest.ForeColor = System.Drawing.Color.White
-        Me.btnRequest.Location = New System.Drawing.Point(0, 80)
-        Me.btnRequest.Name = "btnRequest"
-        Me.btnRequest.Padding = New System.Windows.Forms.Padding(15, 0, 0, 0)
-        Me.btnRequest.Size = New System.Drawing.Size(220, 50)
-        Me.btnRequest.TabIndex = 1
-        Me.btnRequest.Text = "Request Clearance"
-        Me.btnRequest.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnRequest.UseVisualStyleBackColor = True
+        Me.btnLogout.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.btnLogout.FlatAppearance.BorderSize = 0
+        Me.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnLogout.Font = New System.Drawing.Font("Segoe UI", 10.0!)
+        Me.btnLogout.ForeColor = System.Drawing.Color.FromArgb(255, 205, 210)
+        Me.btnLogout.Location = New System.Drawing.Point(0, 550)
+        Me.btnLogout.Name = "btnLogout"
+        Me.btnLogout.Size = New System.Drawing.Size(220, 50)
+        Me.btnLogout.TabIndex = 5
+        Me.btnLogout.Text = "Sign Out"
+        Me.btnLogout.UseVisualStyleBackColor = True
         '
         'btnHistory
         '
@@ -97,19 +74,40 @@ Partial Class frmUser
         Me.btnHistory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnHistory.UseVisualStyleBackColor = True
         '
-        'btnLogout
+        'btnRequest
         '
-        Me.btnLogout.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.btnLogout.FlatAppearance.BorderSize = 0
-        Me.btnLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnLogout.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.btnLogout.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(205, Byte), Integer), CType(CType(210, Byte), Integer))
-        Me.btnLogout.Location = New System.Drawing.Point(0, 550)
-        Me.btnLogout.Name = "btnLogout"
-        Me.btnLogout.Size = New System.Drawing.Size(220, 50)
-        Me.btnLogout.TabIndex = 5
-        Me.btnLogout.Text = "Sign Out"
-        Me.btnLogout.UseVisualStyleBackColor = True
+        Me.btnRequest.Dock = System.Windows.Forms.DockStyle.Top
+        Me.btnRequest.FlatAppearance.BorderSize = 0
+        Me.btnRequest.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnRequest.Font = New System.Drawing.Font("Segoe UI", 10.0!)
+        Me.btnRequest.ForeColor = System.Drawing.Color.White
+        Me.btnRequest.Location = New System.Drawing.Point(0, 80)
+        Me.btnRequest.Name = "btnRequest"
+        Me.btnRequest.Padding = New System.Windows.Forms.Padding(15, 0, 0, 0)
+        Me.btnRequest.Size = New System.Drawing.Size(220, 50)
+        Me.btnRequest.TabIndex = 1
+        Me.btnRequest.Text = "Request Clearance"
+        Me.btnRequest.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnRequest.UseVisualStyleBackColor = True
+        '
+        'pnlLogo
+        '
+        Me.pnlLogo.BackColor = System.Drawing.Color.FromArgb(0, 121, 107)
+        Me.pnlLogo.Controls.Add(Me.Label1)
+        Me.pnlLogo.Dock = System.Windows.Forms.DockStyle.Top
+        Me.pnlLogo.Location = New System.Drawing.Point(0, 0)
+        Me.pnlLogo.Name = "pnlLogo"
+        Me.pnlLogo.Size = New System.Drawing.Size(220, 80)
+        Me.pnlLogo.TabIndex = 0
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 14.0!, System.Drawing.FontStyle.Bold)
+        Me.Label1.ForeColor = System.Drawing.Color.White
+        Me.Label1.Location = New System.Drawing.Point(40, 25)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Text = "RESIDENT"
         '
         'pnlHeader
         '
@@ -148,7 +146,7 @@ Partial Class frmUser
         Me.Label2.ForeColor = System.Drawing.Color.Silver
         Me.Label2.Location = New System.Drawing.Point(200, 200)
         Me.Label2.Name = "Label2"
-        Me.Label2.Text = "User Services Here"
+        Me.Label2.Text = "Select an option from the menu"
         '
         'frmUser
         '

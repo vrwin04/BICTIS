@@ -2,7 +2,6 @@
 
 Public Class frmRegistration
     Private Sub btnRegister_Click(sender As Object, e As EventArgs) Handles btnRegister.Click
-        ' 1. Validation
         If txtUsername.Text = "" Or txtPassword.Text = "" Or txtFullName.Text = "" Then
             MessageBox.Show("Please fill in all fields.", "Missing Info", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
@@ -13,33 +12,36 @@ Public Class frmRegistration
             Exit Sub
         End If
 
-        ' 2. Check if Username Exists
-        Dim checkQuery As String = "SELECT COUNT(*) FROM tbl_Users WHERE Username=@user"
+        ' Check Duplicate
         Dim checkParams As New Dictionary(Of String, Object)
         checkParams.Add("@user", txtUsername.Text)
-
-        Dim dt As DataTable = Session.GetDataTable(checkQuery, checkParams)
-        If dt.Rows.Count > 0 AndAlso Convert.ToInt32(dt.Rows(0)(0)) > 0 Then
+        If Session.GetCount("SELECT COUNT(*) FROM tbl_Users WHERE Username=@user") > 0 Then
             MessageBox.Show("Username already taken.", "Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
         End If
 
-        ' 3. SECURE INSERT: Force Role to be 'User'
-        ' We do NOT allow the user to pick a role. We hardcode 'User' in the SQL.
-        Dim insertQuery As String = "INSERT INTO tbl_Users (Username, [Password], Role, FullName) VALUES (@user, @pass, 'User', @full)"
+        ' INSERT RESIDENT USER (Role='User')
+        Dim query As String = "INSERT INTO tbl_Users (Username, [Password], Role, FullName) VALUES (@user, @pass, 'User', @full)"
+        Dim params As New Dictionary(Of String, Object)
+        params.Add("@user", txtUsername.Text)
+        params.Add("@pass", txtPassword.Text)
+        params.Add("@full", txtFullName.Text)
 
-        Dim insertParams As New Dictionary(Of String, Object)
-        insertParams.Add("@user", txtUsername.Text)
-        insertParams.Add("@pass", txtPassword.Text)
-        insertParams.Add("@full", txtFullName.Text)
-
-        If Session.ExecuteQuery(insertQuery, insertParams) Then
-            MessageBox.Show("Resident Account Created! You may now login.", "Welcome", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-            ' Redirect to Login
+        If Session.ExecuteQuery(query, params) Then
+            MessageBox.Show("Account Created Successfully!", "Welcome", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Dim login As New frmLogin()
             login.Show()
             Me.Close()
+        End If
+    End Sub
+
+    Private Sub chkShowPass_CheckedChanged(sender As Object, e As EventArgs) Handles chkShowPass.CheckedChanged
+        If chkShowPass.Checked Then
+            txtPassword.PasswordChar = ControlChars.NullChar
+            txtConfirmPass.PasswordChar = ControlChars.NullChar
+        Else
+            txtPassword.PasswordChar = "•"c
+            txtConfirmPass.PasswordChar = "•"c
         End If
     End Sub
 
@@ -51,14 +53,5 @@ Public Class frmRegistration
 
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
         Application.Exit()
-    End Sub
-    Private Sub chkShowPass_CheckedChanged(sender As Object, e As EventArgs) Handles chkShowPass.CheckedChanged
-        If chkShowPass.Checked Then
-            txtPassword.PasswordChar = ControlChars.NullChar
-            txtConfirmPass.PasswordChar = ControlChars.NullChar
-        Else
-            txtPassword.PasswordChar = "•"c
-            txtConfirmPass.PasswordChar = "•"c
-        End If
     End Sub
 End Class

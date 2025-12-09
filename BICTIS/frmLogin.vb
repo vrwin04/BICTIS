@@ -1,11 +1,9 @@
-﻿Imports System.Data.OleDb
-Imports System.Collections.Generic
+﻿Imports System.Collections.Generic
 
 Public Class frmLogin
     Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
-        ' Logic remains the same, just attached to the new Button
         If txtUsername.Text = "" Or txtPassword.Text = "" Then
-            MessageBox.Show("Please enter credentials.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            MessageBox.Show("Please fill in all fields.", "Missing Credentials", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
         End If
 
@@ -21,25 +19,29 @@ Public Class frmLogin
             Session.CurrentUserRole = dt.Rows(0)("Role").ToString()
             Session.CurrentUserName = dt.Rows(0)("Username").ToString()
 
-            Dim dash As New adminDashboard()
-            dash.Show()
+            MessageBox.Show("Welcome back, " & Session.CurrentUserName, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            If Session.CurrentUserRole = "Admin" Or Session.CurrentUserRole = "Secretary" Then
+                Dim admin As New adminDashboard()
+                admin.Show()
+            Else
+                Dim user As New frmUser()
+                user.Show()
+            End If
             Me.Hide()
         Else
-            MessageBox.Show("Invalid Username or Password.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Incorrect Username or Password.", "Authentication Failed", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
-
-
-        If Session.CurrentUserRole = "Admin" Or Session.CurrentUserRole = "Secretary" Then
-            Dim adminDash As New adminDashboard()
-            adminDash.Show()
-        Else
-            Dim userDash As New frmUser()
-            userDash.Show()
-        End If
-
     End Sub
 
-    ' Link to open Registration Form
+    Private Sub chkShowPass_CheckedChanged(sender As Object, e As EventArgs) Handles chkShowPass.CheckedChanged
+        If chkShowPass.Checked Then
+            txtPassword.PasswordChar = ControlChars.NullChar
+        Else
+            txtPassword.PasswordChar = "•"c
+        End If
+    End Sub
+
     Private Sub lblRegisterLink_Click(sender As Object, e As EventArgs) Handles lblRegisterLink.Click
         Dim reg As New frmRegistration()
         reg.Show()
@@ -48,13 +50,5 @@ Public Class frmLogin
 
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
         Application.Exit()
-    End Sub
-
-    Private Sub chkShowPass_CheckedChanged(sender As Object, e As EventArgs) Handles chkShowPass.CheckedChanged
-        If chkShowPass.Checked Then
-            txtPassword.PasswordChar = ControlChars.NullChar ' Show Text
-        Else
-            txtPassword.PasswordChar = "•"c ' Hide Text (bullet character)
-        End If
     End Sub
 End Class
