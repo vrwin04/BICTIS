@@ -13,30 +13,30 @@ Public Class frmRegistration
             Exit Sub
         End If
 
-        ' 2. Check if User Exists (Using Session Module)
+        ' 2. Check if Username Exists
         Dim checkQuery As String = "SELECT COUNT(*) FROM tbl_Users WHERE Username=@user"
         Dim checkParams As New Dictionary(Of String, Object)
         checkParams.Add("@user", txtUsername.Text)
 
-        ' Note: We need a slight modification to GetCount to accept parameters, 
-        ' OR we just use GetDataTable for safety. Let's use GetDataTable.
         Dim dt As DataTable = Session.GetDataTable(checkQuery, checkParams)
         If dt.Rows.Count > 0 AndAlso Convert.ToInt32(dt.Rows(0)(0)) > 0 Then
-            MessageBox.Show("Username already taken. Please choose another.", "Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            MessageBox.Show("Username already taken.", "Unavailable", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
         End If
 
-        ' 3. Register New User
+        ' 3. SECURE INSERT: Force Role to be 'User'
+        ' We do NOT allow the user to pick a role. We hardcode 'User' in the SQL.
         Dim insertQuery As String = "INSERT INTO tbl_Users (Username, [Password], Role, FullName) VALUES (@user, @pass, 'User', @full)"
+
         Dim insertParams As New Dictionary(Of String, Object)
         insertParams.Add("@user", txtUsername.Text)
-        insertParams.Add("@pass", txtPassword.Text) ' In production, Hash this!
+        insertParams.Add("@pass", txtPassword.Text)
         insertParams.Add("@full", txtFullName.Text)
 
         If Session.ExecuteQuery(insertQuery, insertParams) Then
-            MessageBox.Show("Account created successfully! You can now login.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBox.Show("Resident Account Created! You may now login.", "Welcome", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-            ' Go to Login
+            ' Redirect to Login
             Dim login As New frmLogin()
             login.Show()
             Me.Close()

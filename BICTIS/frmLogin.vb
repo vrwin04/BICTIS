@@ -27,6 +27,16 @@ Public Class frmLogin
         Else
             MessageBox.Show("Invalid Username or Password.", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
+
+
+        If Session.CurrentUserRole = "Admin" Or Session.CurrentUserRole = "Secretary" Then
+            Dim adminDash As New adminDashboard()
+            adminDash.Show()
+        Else
+            Dim userDash As New frmUser()
+            userDash.Show()
+        End If
+
     End Sub
 
     ' Link to open Registration Form
