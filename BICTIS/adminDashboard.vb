@@ -8,10 +8,7 @@ Public Class adminDashboard
     End Sub
 
     Private Sub LoadStats()
-        ' FIX: tblResidents
         lblTotalUsers.Text = Session.GetCount("SELECT COUNT(*) FROM tblResidents WHERE Role='User'").ToString()
-
-        ' FIX: tblIncidents
         Dim pending As Integer = Session.GetCount("SELECT COUNT(*) FROM tblIncidents WHERE Status='Pending'")
         lblPendingCases.Text = pending.ToString()
 
@@ -23,7 +20,6 @@ Public Class adminDashboard
     End Sub
 
     Private Sub LoadChart()
-        ' FIX: Changed alias 'Count' to 'ICount' to avoid reserved word error
         Dim query As String = "SELECT IncidentType, COUNT(*) as [ICount] FROM tblIncidents GROUP BY IncidentType"
         Dim dt As DataTable = Session.GetDataTable(query)
 
@@ -37,8 +33,13 @@ Public Class adminDashboard
         Next
 
         chartIncidents.Series.Add(series)
-        chartIncidents.Titles.Clear()
-        chartIncidents.Titles.Add("Case Distribution")
+    End Sub
+
+    ' NAVIGATION
+    Private Sub btnResidents_Click(sender As Object, e As EventArgs) Handles btnResidents.Click
+        Dim frm As New frmManageResidents()
+        frm.ShowDialog()
+        LoadStats()
     End Sub
 
     Private Sub btnBlotter_Click(sender As Object, e As EventArgs) Handles btnBlotter.Click
@@ -48,10 +49,10 @@ Public Class adminDashboard
         LoadChart()
     End Sub
 
-    Private Sub btnResidents_Click(sender As Object, e As EventArgs) Handles btnResidents.Click
-        Dim frm As New frmManageResidents()
+    ' THIS IS THE NEW BUTTON YOU NEEDED
+    Private Sub btnClearance_Click(sender As Object, e As EventArgs) Handles btnClearance.Click
+        Dim frm As New frmClearance()
         frm.ShowDialog()
-        LoadStats()
     End Sub
 
     Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click

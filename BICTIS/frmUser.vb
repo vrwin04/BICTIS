@@ -5,34 +5,28 @@ Public Class frmUser
         lblWelcome.Text = "Welcome, " & Session.CurrentFullName
     End Sub
 
-    Private Sub btnRequest_Click(sender As Object, e As EventArgs) Handles btnRequest.Click
-        ' 1. Check for Pending Case using ResidentID
-        Dim checkSql As String = "SELECT COUNT(*) FROM tblIncidents WHERE RespondentID = @uid AND Status = 'Pending'"
-        Dim params As New Dictionary(Of String, Object)
-        params.Add("@uid", Session.CurrentResidentID)
-
-        Dim activeCases As Integer = Session.GetCount(checkSql, params)
-
-        If activeCases > 0 Then
-            MessageBox.Show("ACCESS DENIED. You have pending cases.", "Blocked", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Exit Sub
-        End If
-
-        ' 2. Submit Request
-        Dim query As String = "INSERT INTO tblClearances (ResidentID, Purpose, DateIssued, Status) VALUES (@uid, 'General', @date, 'Requested')"
-        Dim insertParams As New Dictionary(Of String, Object)
-        insertParams.Add("@uid", Session.CurrentResidentID)
-        insertParams.Add("@date", DateTime.Now.ToString())
-
-        If Session.ExecuteQuery(query, insertParams) Then
-            MessageBox.Show("Request Submitted!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        End If
+    Private Sub btnReport_Click(sender As Object, e As EventArgs) Handles btnReport.Click
+        ' NEW FORM for Reporting
+        Dim frm As New frmReportConcern()
+        frm.ShowDialog()
     End Sub
 
-    Private Sub btnHistory_Click(sender As Object, e As EventArgs) Handles btnHistory.Click
-        ' FIX: Select using ResidentID
-        Dim dt As DataTable = Session.GetDataTable("SELECT * FROM tblClearances WHERE ResidentID=" & Session.CurrentResidentID)
-        MessageBox.Show("You have " & dt.Rows.Count & " past records.", "Info")
+    Private Sub btnMyBlotter_Click(sender As Object, e As EventArgs) Handles btnMyBlotter.Click
+        ' Check if user is involved in cases (as Complainant OR Respondent)
+        Dim sql As String = "SELECT IncidentType, Status, IncidentDate, Narrative FROM tblIncidents " &
+                            "WHERE ComplainantID=" & Session.CurrentResidentID & " OR RespondentID=" & Session.CurrentResidentID
+
+        Dim dt As DataTable = Session.GetDataTable(sql)
+
+        If dt.Rows.Count > 0 Then
+            Dim msg As String = "Your Cases:" & vbCrLf
+            For Each row As DataRow In dt.Rows
+                msg &= "- " & row("IncidentType").ToString() & " [" & row("Status").ToString() & "]" & vbCrLf
+            Next
+            MessageBox.Show(msg, "My Blotter History", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Else
+            MessageBox.Show("You have no blotter records.", "Clean Record", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
     End Sub
 
     Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
