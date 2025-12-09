@@ -35,6 +35,7 @@ Partial Class frmLogin
         Me.pnlLeft.SuspendLayout()
         Me.pnlRight.SuspendLayout()
         Me.SuspendLayout()
+        Me.chkShowPass = New System.Windows.Forms.CheckBox()
         '
         'pnlLeft
         '
@@ -88,6 +89,7 @@ Partial Class frmLogin
         Me.pnlRight.Name = "pnlRight"
         Me.pnlRight.Size = New System.Drawing.Size(450, 480)
         Me.pnlRight.TabIndex = 1
+        Me.pnlRight.Controls.Add(Me.chkShowPass)
         '
         'btnClose
         '
@@ -229,6 +231,19 @@ Partial Class frmLogin
         Me.pnlRight.ResumeLayout(False)
         Me.pnlRight.PerformLayout()
         Me.ResumeLayout(False)
+        '
+        ' chkShowPass
+        '
+        Me.chkShowPass.AutoSize = True
+        Me.chkShowPass.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.chkShowPass.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.chkShowPass.ForeColor = System.Drawing.Color.Gray
+        Me.chkShowPass.Location = New System.Drawing.Point(50, 295) ' Positioned below Password line
+        Me.chkShowPass.Name = "chkShowPass"
+        Me.chkShowPass.Size = New System.Drawing.Size(108, 19)
+        Me.chkShowPass.TabIndex = 3
+        Me.chkShowPass.Text = "Show Password"
+        Me.chkShowPass.UseVisualStyleBackColor = True
 
     End Sub
 
@@ -247,4 +262,5 @@ Partial Class frmLogin
     Friend WithEvents btnClose As Button
     Friend WithEvents pnlUserLine As Panel
     Friend WithEvents pnlPassLine As Panel
+    Friend WithEvents chkShowPass As CheckBox
 End Class

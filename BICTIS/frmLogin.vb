@@ -49,4 +49,12 @@ Public Class frmLogin
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
         Application.Exit()
     End Sub
+
+    Private Sub chkShowPass_CheckedChanged(sender As Object, e As EventArgs) Handles chkShowPass.CheckedChanged
+        If chkShowPass.Checked Then
+            txtPassword.PasswordChar = ControlChars.NullChar ' Show Text
+        Else
+            txtPassword.PasswordChar = "•"c ' Hide Text (bullet character)
+        End If
+    End Sub
 End Class

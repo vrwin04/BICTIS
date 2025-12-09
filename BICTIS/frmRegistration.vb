@@ -52,4 +52,13 @@ Public Class frmRegistration
     Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
         Application.Exit()
     End Sub
+    Private Sub chkShowPass_CheckedChanged(sender As Object, e As EventArgs) Handles chkShowPass.CheckedChanged
+        If chkShowPass.Checked Then
+            txtPassword.PasswordChar = ControlChars.NullChar
+            txtConfirmPass.PasswordChar = ControlChars.NullChar
+        Else
+            txtPassword.PasswordChar = "•"c
+            txtConfirmPass.PasswordChar = "•"c
+        End If
+    End Sub
 End Class
