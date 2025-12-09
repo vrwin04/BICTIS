@@ -1,18 +1,43 @@
-﻿Imports System.Collections.Generic
+﻿Public Class frmClearance
+    Private Sub frmClearance_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadRequests()
+    End Sub
 
-Public Class frmRequestClearance
-    Private Sub btnSubmit_Click(sender As Object, e As EventArgs) Handles btnSubmit.Click
-        ' 1. SECURITY CHECK: Do they have a pending case?
-        ' Assuming UserID matches RespondentID for simplicity in this demo
-        Dim blocked As Boolean = Session.GetCount("SELECT COUNT(*) FROM tbl_Incidents WHERE RespondentID=" & Session.CurrentUserID & " AND Status='Pending'") > 0
+    Private Sub LoadRequests()
+        ' Shows requests with Resident Name
+        Dim sql As String = "SELECT c.ClearanceID, u.FullName, c.Purpose, c.DateIssued, c.Status " &
+                            "FROM tbl_Clearances c " &
+                            "INNER JOIN tbl_Users u ON c.ResidentID = u.UserID " &
+                            "ORDER BY c.DateIssued DESC"
+        dgvRequests.DataSource = Session.GetDataTable(sql)
+    End Sub
 
-        If blocked Then
-            MessageBox.Show("BLOCKED: You have a pending case.", "Security Alert", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Exit Sub
+    Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
+        If dgvRequests.SelectedRows.Count = 0 Then Exit Sub
+
+        Dim cid As Integer = Convert.ToInt32(dgvRequests.SelectedRows(0).Cells("ClearanceID").Value)
+
+        ' Update status to Approved
+        Session.ExecuteQuery("UPDATE tbl_Clearances SET Status='Approved' WHERE ClearanceID=" & cid)
+
+        MessageBox.Show("Clearance Approved! Sending to Printer...", "Printing", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        ' (Printing logic would go here, usually opening a PrintPreviewDialog)
+
+        LoadRequests()
+    End Sub
+
+    Private Sub btnReject_Click(sender As Object, e As EventArgs) Handles btnReject.Click
+        If dgvRequests.SelectedRows.Count = 0 Then Exit Sub
+
+        Dim cid As Integer = Convert.ToInt32(dgvRequests.SelectedRows(0).Cells("ClearanceID").Value)
+
+        If MessageBox.Show("Reject this request?", "Confirm", MessageBoxButtons.YesNo) = DialogResult.Yes Then
+            Session.ExecuteQuery("UPDATE tbl_Clearances SET Status='Rejected' WHERE ClearanceID=" & cid)
+            LoadRequests()
         End If
+    End Sub
 
-        ' 2. Submit
-        MessageBox.Show("Clearance Request Submitted to Admin.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
         Me.Close()
     End Sub
 End Class

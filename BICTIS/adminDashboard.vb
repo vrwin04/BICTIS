@@ -56,9 +56,11 @@ Public Class adminDashboard
     End Sub
 
     Private Sub btnResidents_Click(sender As Object, e As EventArgs) Handles btnResidents.Click
-        ' Reuse the User List form (since Residents = Users)
-        ' Create frmManageResidents if you haven't, or just show a grid here.
-        MessageBox.Show("Resident Management Module loading...", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        ' OPEN THE RESIDENT MANAGER FORM
+        Dim frm As New frmManageResidents()
+        frm.ShowDialog()
+
+        LoadStatistics()
     End Sub
 
     Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
