@@ -1,70 +1,71 @@
-﻿Imports System.Windows.Forms.DataVisualization.Charting
+﻿Imports System.Collections.Generic
+Imports System.Windows.Forms.DataVisualization.Charting ' FIXES Error BC30451 & BC30002
+Imports Microsoft.SqlServer
 
 Public Class adminDashboard
+    ' ERROR BC30506 (Handles Clause) happens if the buttons below don't exist in the Designer.
+    ' Make sure you update the Designer.vb file in Step 2!
+
     Private Sub adminDashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        lblPageTitle.Text = "Administrator Control Panel"
-        LoadStatistics()
-        LoadIncidentChart()
+        lblPageTitle.Text = "Dashboard - " & Session.CurrentUserRole
+        LoadStats()
+        LoadChart()
     End Sub
 
-    Private Sub LoadStatistics()
-        ' 1. Total Residents (Users)
-        Dim totalUsers As Integer = Session.GetCount("SELECT COUNT(*) FROM tbl_Users WHERE Role='User'")
-        lblTotalUsers.Text = totalUsers.ToString()
+    Private Sub LoadStats()
+        ' Count Users (Residents)
+        lblTotalUsers.Text = Session.GetCount("SELECT COUNT(*) FROM tbl_Users WHERE Role='User'").ToString()
 
-        ' 2. Pending Cases (Critical for blocking clearances)
-        Dim pendingCases As Integer = Session.GetCount("SELECT COUNT(*) FROM tbl_Incidents WHERE Status='Pending'")
-        lblPendingCases.Text = pendingCases.ToString()
+        ' Count Pending Cases
+        Dim pending As Integer = Session.GetCount("SELECT COUNT(*) FROM tbl_Incidents WHERE Status='Pending'")
+        lblPendingCases.Text = pending.ToString()
 
-        ' Visual Alert Logic
-        If pendingCases > 0 Then
-            pnlCard2.BackColor = Color.MistyRose
-            lblPendingCases.ForeColor = Color.DarkRed
+        ' Visual Alert
+        If pending > 0 Then
+            lblPendingCases.ForeColor = Color.Red
         Else
-            pnlCard2.BackColor = Color.White
             lblPendingCases.ForeColor = Color.Green
         End If
     End Sub
 
-    Private Sub LoadIncidentChart()
+    Private Sub LoadChart()
         ' Graph: Incidents by Type
         Dim query As String = "SELECT IncidentType, COUNT(*) as Count FROM tbl_Incidents GROUP BY IncidentType"
         Dim dt As DataTable = Session.GetDataTable(query)
 
+        ' Clear previous data
         chartIncidents.Series.Clear()
+        chartIncidents.Titles.Clear()
+
+        ' Create Series
         Dim series As New Series("Incidents")
-        series.ChartType = SeriesChartType.Pie
-        series.IsValueShownAsLabel = True
+        series.ChartType = SeriesChartType.Column ' Fixes "SeriesChartType" error
+        series.Color = Color.FromArgb(41, 128, 185)
 
         For Each row As DataRow In dt.Rows
             series.Points.AddXY(row("IncidentType").ToString(), row("Count"))
         Next
 
         chartIncidents.Series.Add(series)
-        chartIncidents.Titles.Clear()
-        chartIncidents.Titles.Add("Case Distribution")
+        chartIncidents.Titles.Add("Incident Distribution")
     End Sub
 
-    ' --- NAVIGATION ---
-
-    Private Sub btnBlotter_Click(sender As Object, e As EventArgs) Handles btnBlotter.Click
-        ' Open the Incident Manager
-        Dim frm As New frmBlotter()
-        frm.ShowDialog()
-        LoadStatistics() ' Refresh data when they return
-        LoadIncidentChart()
-    End Sub
-
+    ' NAVIGATION
     Private Sub btnResidents_Click(sender As Object, e As EventArgs) Handles btnResidents.Click
-        ' OPEN THE RESIDENT MANAGER FORM
         Dim frm As New frmManageResidents()
         frm.ShowDialog()
+        LoadStats()
+    End Sub
 
-        LoadStatistics()
+    Private Sub btnBlotter_Click(sender As Object, e As EventArgs) Handles btnBlotter.Click
+        Dim frm As New frmBlotter()
+        frm.ShowDialog()
+        LoadStats()
+        LoadChart()
     End Sub
 
     Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
-        If MessageBox.Show("Are you sure you want to sign out?", "Confirm Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+        If MessageBox.Show("Sign out?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             Session.CurrentUserID = 0
             Dim login As New frmLogin()
             login.Show()

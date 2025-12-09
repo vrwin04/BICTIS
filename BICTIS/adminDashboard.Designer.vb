@@ -21,6 +21,7 @@ Partial Class adminDashboard
         Me.pnlSidebar = New System.Windows.Forms.Panel()
         Me.btnLogout = New System.Windows.Forms.Button()
         Me.btnBlotter = New System.Windows.Forms.Button()
+        Me.btnResidents = New System.Windows.Forms.Button()
         Me.pnlLogo = New System.Windows.Forms.Panel()
         Me.lblLogo = New System.Windows.Forms.Label()
         Me.pnlHeader = New System.Windows.Forms.Panel()
@@ -47,6 +48,7 @@ Partial Class adminDashboard
         Me.pnlSidebar.BackColor = System.Drawing.Color.FromArgb(44, 62, 80)
         Me.pnlSidebar.Controls.Add(Me.btnLogout)
         Me.pnlSidebar.Controls.Add(Me.btnBlotter)
+        Me.pnlSidebar.Controls.Add(Me.btnResidents)
         Me.pnlSidebar.Controls.Add(Me.pnlLogo)
         Me.pnlSidebar.Dock = System.Windows.Forms.DockStyle.Left
         Me.pnlSidebar.Location = New System.Drawing.Point(0, 0)
@@ -75,14 +77,30 @@ Partial Class adminDashboard
         Me.btnBlotter.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.btnBlotter.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.btnBlotter.ForeColor = System.Drawing.Color.LightGray
-        Me.btnBlotter.Location = New System.Drawing.Point(0, 80)
+        Me.btnBlotter.Location = New System.Drawing.Point(0, 130)
         Me.btnBlotter.Name = "btnBlotter"
         Me.btnBlotter.Padding = New System.Windows.Forms.Padding(15, 0, 0, 0)
         Me.btnBlotter.Size = New System.Drawing.Size(220, 50)
         Me.btnBlotter.TabIndex = 2
-        Me.btnBlotter.Text = "Manage Blotter"
+        Me.btnBlotter.Text = "Incident Blotter"
         Me.btnBlotter.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnBlotter.UseVisualStyleBackColor = True
+        '
+        'btnResidents
+        '
+        Me.btnResidents.Dock = System.Windows.Forms.DockStyle.Top
+        Me.btnResidents.FlatAppearance.BorderSize = 0
+        Me.btnResidents.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnResidents.Font = New System.Drawing.Font("Segoe UI", 10.0!)
+        Me.btnResidents.ForeColor = System.Drawing.Color.LightGray
+        Me.btnResidents.Location = New System.Drawing.Point(0, 80)
+        Me.btnResidents.Name = "btnResidents"
+        Me.btnResidents.Padding = New System.Windows.Forms.Padding(15, 0, 0, 0)
+        Me.btnResidents.Size = New System.Drawing.Size(220, 50)
+        Me.btnResidents.TabIndex = 1
+        Me.btnResidents.Text = "Manage Residents"
+        Me.btnResidents.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnResidents.UseVisualStyleBackColor = True
         '
         'pnlLogo
         '
@@ -121,7 +139,7 @@ Partial Class adminDashboard
         Me.lblPageTitle.Name = "lblPageTitle"
         Me.lblPageTitle.Size = New System.Drawing.Size(157, 25)
         Me.lblPageTitle.TabIndex = 0
-        Me.lblPageTitle.Text = "Analytics Overview"
+        Me.lblPageTitle.Text = "Admin Overview"
         '
         'pnlContainer
         '
@@ -238,6 +256,7 @@ Partial Class adminDashboard
     Friend WithEvents pnlLogo As Panel
     Friend WithEvents lblLogo As Label
     Friend WithEvents btnBlotter As Button
+    Friend WithEvents btnResidents As Button
     Friend WithEvents btnLogout As Button
     Friend WithEvents pnlHeader As Panel
     Friend WithEvents lblPageTitle As Label
