@@ -4,11 +4,11 @@ Imports System.Windows.Forms
 Imports System.Collections.Generic
 
 Public Module Session
-    ' 1. CONFIGURATION
+    ' 1. DATABASE CONFIGURATION
     Public dbFile As String = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "BICTIS_DB.accdb")
     Private ReadOnly connectionString As String = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & dbFile & ";Persist Security Info=False;"
 
-    ' 2. GLOBAL USER STATE (Renamed to match tblResidents)
+    ' 2. GLOBAL USER STATE (Renamed to match ResidentID)
     Public CurrentResidentID As Integer = 0
     Public CurrentUserRole As String = ""
     Public CurrentUserName As String = ""
@@ -29,7 +29,7 @@ Public Module Session
                     Dim adapter As New OleDbDataAdapter(cmd)
                     adapter.Fill(dt)
                 Catch ex As Exception
-                    MessageBox.Show("DB Error: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    MessageBox.Show("DB Read Error: " & ex.Message & vbCrLf & "Query: " & query, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 End Try
             End Using
         End Using
@@ -50,7 +50,7 @@ Public Module Session
                     cmd.ExecuteNonQuery()
                     Return True
                 Catch ex As Exception
-                    MessageBox.Show("DB Write Error: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    MessageBox.Show("DB Write Error: " & ex.Message & vbCrLf & "Query: " & query, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     Return False
                 End Try
             End Using

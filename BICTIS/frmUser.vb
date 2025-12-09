@@ -6,7 +6,7 @@ Public Class frmUser
     End Sub
 
     Private Sub btnRequest_Click(sender As Object, e As EventArgs) Handles btnRequest.Click
-        ' 1. Check for Pending Case
+        ' 1. Check for Pending Case using ResidentID
         Dim checkSql As String = "SELECT COUNT(*) FROM tblIncidents WHERE RespondentID = @uid AND Status = 'Pending'"
         Dim params As New Dictionary(Of String, Object)
         params.Add("@uid", Session.CurrentResidentID)
@@ -14,7 +14,7 @@ Public Class frmUser
         Dim activeCases As Integer = Session.GetCount(checkSql, params)
 
         If activeCases > 0 Then
-            MessageBox.Show("ACCESS DENIED." & vbCrLf & "You have " & activeCases & " pending case(s).", "Clearance Blocked", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBox.Show("ACCESS DENIED. You have pending cases.", "Blocked", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Exit Sub
         End If
 
@@ -30,6 +30,7 @@ Public Class frmUser
     End Sub
 
     Private Sub btnHistory_Click(sender As Object, e As EventArgs) Handles btnHistory.Click
+        ' FIX: Select using ResidentID
         Dim dt As DataTable = Session.GetDataTable("SELECT * FROM tblClearances WHERE ResidentID=" & Session.CurrentResidentID)
         MessageBox.Show("You have " & dt.Rows.Count & " past records.", "Info")
     End Sub

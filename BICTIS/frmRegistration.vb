@@ -12,7 +12,7 @@ Public Class frmRegistration
             Exit Sub
         End If
 
-        ' Check Duplicates in tblResidents
+        ' FIX: Check duplicate in tblResidents
         Dim checkParams As New Dictionary(Of String, Object)
         checkParams.Add("@user", txtUsername.Text)
         If Session.GetCount("SELECT COUNT(*) FROM tblResidents WHERE Username=@user", checkParams) > 0 Then
@@ -20,7 +20,7 @@ Public Class frmRegistration
             Exit Sub
         End If
 
-        ' UPDATED: Insert into tblResidents
+        ' FIX: Insert into tblResidents
         Dim query As String = "INSERT INTO tblResidents (Username, [Password], Role, FullName, IsActive) VALUES (@user, @pass, 'User', @full, True)"
         Dim params As New Dictionary(Of String, Object)
         params.Add("@user", txtUsername.Text)
@@ -28,7 +28,7 @@ Public Class frmRegistration
         params.Add("@full", txtFullName.Text)
 
         If Session.ExecuteQuery(query, params) Then
-            MessageBox.Show("Resident Account Created! Please Login.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBox.Show("Account Created! Please Login.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Dim login As New frmLogin()
             login.Show()
             Me.Close()

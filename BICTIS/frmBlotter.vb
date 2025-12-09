@@ -8,7 +8,7 @@ Public Class frmBlotter
     End Sub
 
     Private Sub LoadDropdowns()
-        ' Load Residents for Respondent Box
+        ' FIX: Select ResidentID (not UserID)
         Dim dt As DataTable = Session.GetDataTable("SELECT ResidentID, FullName FROM tblResidents WHERE Role='User'")
         cbRespondent.DataSource = dt
         cbRespondent.DisplayMember = "FullName"
@@ -20,11 +20,8 @@ Public Class frmBlotter
     End Sub
 
     Private Sub LoadIncidents()
-        ' Join Incidents with Residents to show names
-        Dim sql As String = "SELECT i.IncidentID, i.IncidentType, u.FullName AS Respondent, i.Status, i.IncidentDate, i.Narrative " &
-                            "FROM tblIncidents i " &
-                            "LEFT JOIN tblResidents u ON i.RespondentID = u.ResidentID " &
-                            "ORDER BY i.IncidentID DESC"
+        ' FIX: Join with tblResidents ON ResidentID
+        Dim sql As String = "SELECT i.IncidentID, i.IncidentType, u.FullName AS Respondent, i.Status, i.IncidentDate, i.Narrative FROM tblIncidents i LEFT JOIN tblResidents u ON i.RespondentID = u.ResidentID ORDER BY i.IncidentID DESC"
         dgvCases.DataSource = Session.GetDataTable(sql)
     End Sub
 
@@ -38,7 +35,7 @@ Public Class frmBlotter
         Dim query As String = "INSERT INTO tblIncidents (ComplainantID, RespondentID, IncidentType, Narrative, Status, IncidentDate) VALUES (@comp, @resp, @type, @narr, @stat, @date)"
 
         Dim params As New Dictionary(Of String, Object)
-        params.Add("@comp", Session.CurrentResidentID) ' Admin ID
+        params.Add("@comp", Session.CurrentResidentID)
         params.Add("@resp", cbRespondent.SelectedValue)
         params.Add("@type", txtType.Text)
         params.Add("@narr", narrative)
@@ -60,7 +57,7 @@ Public Class frmBlotter
         If MessageBox.Show("Mark RESOLVED?", "Confirm", MessageBoxButtons.YesNo) = DialogResult.Yes Then
             Session.ExecuteQuery("UPDATE tblIncidents SET Status='Resolved' WHERE IncidentID=" & id)
             LoadIncidents()
-            MessageBox.Show("Case Resolved.", "Updated")
+            MessageBox.Show("Case Resolved.", "Success")
         End If
     End Sub
 
