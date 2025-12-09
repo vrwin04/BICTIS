@@ -1,4 +1,4 @@
-﻿Public Class frmDashboard
+﻿Public Class adminDashboard
     ' NOTE: We removed "Dim db As New Session"
 
     Private Sub frmDashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load

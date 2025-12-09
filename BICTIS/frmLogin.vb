@@ -21,7 +21,7 @@ Public Class frmLogin
             Session.CurrentUserRole = dt.Rows(0)("Role").ToString()
             Session.CurrentUserName = dt.Rows(0)("Username").ToString()
 
-            Dim dash As New frmDashboard()
+            Dim dash As New adminDashboard()
             dash.Show()
             Me.Hide()
         Else
