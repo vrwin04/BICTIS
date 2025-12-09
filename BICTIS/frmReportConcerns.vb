@@ -1,23 +1,31 @@
 ﻿Imports System.Collections.Generic
 
-Public Class frmReportConcern
+Public Class frmReportConcerns
     Private Sub btnSubmit_Click(sender As Object, e As EventArgs) Handles btnSubmit.Click
-        If txtType.Text = "" Or txtNarrative.Text = "" Then
-            MessageBox.Show("Please fill details.", "Warning")
+        ' FIX: Changed 'txtType' to 'cbType' to match the Designer
+        If cbType.Text = "" Or txtNarrative.Text = "" Then
+            MessageBox.Show("Please fill in all details.", "Missing Info", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
         End If
 
-        ' User is Complainant. Respondent is NULL (Unknown/General) for now.
-        Dim query As String = "INSERT INTO tblIncidents (ComplainantID, RespondentID, IncidentType, Narrative, Status, IncidentDate) VALUES (@uid, 0, @type, @narr, 'Pending', @date)"
+        ' 2. Save to Database
+        Dim query As String = "INSERT INTO tblIncidents (ComplainantID, RespondentID, IncidentType, Narrative, Status, IncidentDate) " &
+                              "VALUES (@uid, 0, @type, @narr, 'Pending', @date)"
+
         Dim params As New Dictionary(Of String, Object)
         params.Add("@uid", Session.CurrentResidentID)
-        params.Add("@type", txtType.Text)
+        params.Add("@type", cbType.Text) ' FIX: Changed from txtType.Text to cbType.Text
         params.Add("@narr", txtNarrative.Text)
         params.Add("@date", DateTime.Now.ToString())
 
         If Session.ExecuteQuery(query, params) Then
-            MessageBox.Show("Report Submitted to Barangay.", "Success")
+            MessageBox.Show("Your concern has been reported to the Barangay." & vbCrLf &
+                            "Please check 'My Blotter Cases' for updates.", "Report Submitted", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Me.Close()
         End If
+    End Sub
+
+    Private Sub btnClose_Click(sender As Object, e As EventArgs) Handles btnClose.Click
+        Me.Close()
     End Sub
 End Class
