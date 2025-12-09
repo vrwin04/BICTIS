@@ -2,7 +2,6 @@
 Partial Class frmLogin
     Inherits System.Windows.Forms.Form
 
-    'Form overrides dispose to clean up the component list.
     <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
@@ -14,137 +13,204 @@ Partial Class frmLogin
         End Try
     End Sub
 
-    'Required by the Windows Form Designer
     Private components As System.ComponentModel.IContainer
 
-    'NOTE: The following procedure is required by the Windows Form Designer
-    'It can be modified using the Windows Form Designer.  
-    'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.lblTitle = New System.Windows.Forms.Label()
-        Me.lblUser = New System.Windows.Forms.Label()
-        Me.lblPass = New System.Windows.Forms.Label()
-        Me.txtUsername = New System.Windows.Forms.TextBox()
-        Me.txtPassword = New System.Windows.Forms.TextBox()
+        Me.pnlLeft = New System.Windows.Forms.Panel()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.lblBrand = New System.Windows.Forms.Label()
+        Me.pnlRight = New System.Windows.Forms.Panel()
+        Me.btnClose = New System.Windows.Forms.Button()
+        Me.lblRegisterLink = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.btnLogin = New System.Windows.Forms.Button()
-        Me.btnCancel = New System.Windows.Forms.Button()
-        Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.Panel1.SuspendLayout()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.txtPassword = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.txtUsername = New System.Windows.Forms.TextBox()
+        Me.lblTitle = New System.Windows.Forms.Label()
+        Me.pnlLeft.SuspendLayout()
+        Me.pnlRight.SuspendLayout()
         Me.SuspendLayout()
         '
-        'Panel1 (Container for centering)
+        'pnlLeft
         '
-        Me.Panel1.BackColor = System.Drawing.Color.White
-        Me.Panel1.Controls.Add(Me.btnCancel)
-        Me.Panel1.Controls.Add(Me.btnLogin)
-        Me.Panel1.Controls.Add(Me.txtPassword)
-        Me.Panel1.Controls.Add(Me.txtUsername)
-        Me.Panel1.Controls.Add(Me.lblPass)
-        Me.Panel1.Controls.Add(Me.lblUser)
-        Me.Panel1.Controls.Add(Me.lblTitle)
-        Me.Panel1.Location = New System.Drawing.Point(40, 40)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(400, 300)
-        Me.Panel1.TabIndex = 0
+        Me.pnlLeft.BackColor = System.Drawing.Color.FromArgb(CType(CType(41, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(185, Byte), Integer))
+        Me.pnlLeft.Controls.Add(Me.Label6)
+        Me.pnlLeft.Controls.Add(Me.lblBrand)
+        Me.pnlLeft.Dock = System.Windows.Forms.DockStyle.Left
+        Me.pnlLeft.Location = New System.Drawing.Point(0, 0)
+        Me.pnlLeft.Name = "pnlLeft"
+        Me.pnlLeft.Size = New System.Drawing.Size(300, 450)
+        Me.pnlLeft.TabIndex = 0
+        '
+        'lblBrand
+        '
+        Me.lblBrand.AutoSize = True
+        Me.lblBrand.Font = New System.Drawing.Font("Segoe UI", 24.0!, System.Drawing.FontStyle.Bold)
+        Me.lblBrand.ForeColor = System.Drawing.Color.White
+        Me.lblBrand.Location = New System.Drawing.Point(40, 150)
+        Me.lblBrand.Name = "lblBrand"
+        Me.lblBrand.Size = New System.Drawing.Size(120, 45)
+        Me.lblBrand.TabIndex = 0
+        Me.lblBrand.Text = "BICTIS"
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Segoe UI", 12.0!)
+        Me.Label6.ForeColor = System.Drawing.Color.WhiteSmoke
+        Me.Label6.Location = New System.Drawing.Point(45, 200)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(180, 21)
+        Me.Label6.TabIndex = 1
+        Me.Label6.Text = "Incident Tracking System"
+        '
+        'pnlRight
+        '
+        Me.pnlRight.BackColor = System.Drawing.Color.White
+        Me.pnlRight.Controls.Add(Me.btnClose)
+        Me.pnlRight.Controls.Add(Me.lblRegisterLink)
+        Me.pnlRight.Controls.Add(Me.Label5)
+        Me.pnlRight.Controls.Add(Me.btnLogin)
+        Me.pnlRight.Controls.Add(Me.Label2)
+        Me.pnlRight.Controls.Add(Me.txtPassword)
+        Me.pnlRight.Controls.Add(Me.Label1)
+        Me.pnlRight.Controls.Add(Me.txtUsername)
+        Me.pnlRight.Controls.Add(Me.lblTitle)
+        Me.pnlRight.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.pnlRight.Location = New System.Drawing.Point(300, 0)
+        Me.pnlRight.Name = "pnlRight"
+        Me.pnlRight.Size = New System.Drawing.Size(450, 450)
+        Me.pnlRight.TabIndex = 1
+        '
+        'btnClose
+        '
+        Me.btnClose.FlatAppearance.BorderSize = 0
+        Me.btnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnClose.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.btnClose.ForeColor = System.Drawing.Color.Gray
+        Me.btnClose.Location = New System.Drawing.Point(410, 0)
+        Me.btnClose.Name = "btnClose"
+        Me.btnClose.Size = New System.Drawing.Size(40, 40)
+        Me.btnClose.TabIndex = 8
+        Me.btnClose.Text = "X"
+        Me.btnClose.UseVisualStyleBackColor = True
         '
         'lblTitle
         '
         Me.lblTitle.AutoSize = True
-        Me.lblTitle.Font = New System.Drawing.Font("Segoe UI", 16.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblTitle.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(120, Byte), Integer))
-        Me.lblTitle.Location = New System.Drawing.Point(80, 20)
+        Me.lblTitle.Font = New System.Drawing.Font("Segoe UI", 20.0!, System.Drawing.FontStyle.Bold)
+        Me.lblTitle.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.lblTitle.Location = New System.Drawing.Point(40, 60)
         Me.lblTitle.Name = "lblTitle"
-        Me.lblTitle.Size = New System.Drawing.Size(240, 30)
+        Me.lblTitle.Size = New System.Drawing.Size(99, 37)
         Me.lblTitle.TabIndex = 0
-        Me.lblTitle.Text = "BICTIS SECURITY LOGIN"
+        Me.lblTitle.Text = "Log In"
         '
-        'lblUser
+        'Label1
         '
-        Me.lblUser.AutoSize = True
-        Me.lblUser.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.lblUser.Location = New System.Drawing.Point(40, 80)
-        Me.lblUser.Name = "lblUser"
-        Me.lblUser.Size = New System.Drawing.Size(74, 19)
-        Me.lblUser.TabIndex = 1
-        Me.lblUser.Text = "Username:"
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Segoe UI", 10.0!)
+        Me.Label1.ForeColor = System.Drawing.Color.Gray
+        Me.Label1.Location = New System.Drawing.Point(45, 130)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Text = "Username"
         '
         'txtUsername
         '
-        Me.txtUsername.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.txtUsername.Location = New System.Drawing.Point(40, 105)
+        Me.txtUsername.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.txtUsername.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.txtUsername.Font = New System.Drawing.Font("Segoe UI", 12.0!)
+        Me.txtUsername.Location = New System.Drawing.Point(49, 155)
+        Me.txtUsername.Multiline = True
         Me.txtUsername.Name = "txtUsername"
-        Me.txtUsername.Size = New System.Drawing.Size(320, 25)
+        Me.txtUsername.Size = New System.Drawing.Size(350, 30)
         Me.txtUsername.TabIndex = 1
         '
-        'lblPass
+        'Label2
         '
-        Me.lblPass.AutoSize = True
-        Me.lblPass.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.lblPass.Location = New System.Drawing.Point(40, 145)
-        Me.lblPass.Name = "lblPass"
-        Me.lblPass.Size = New System.Drawing.Size(70, 19)
-        Me.lblPass.TabIndex = 3
-        Me.lblPass.Text = "Password:"
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Segoe UI", 10.0!)
+        Me.Label2.ForeColor = System.Drawing.Color.Gray
+        Me.Label2.Location = New System.Drawing.Point(45, 210)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Text = "Password"
         '
         'txtPassword
         '
-        Me.txtPassword.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.txtPassword.Location = New System.Drawing.Point(40, 170)
+        Me.txtPassword.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.txtPassword.Font = New System.Drawing.Font("Segoe UI", 12.0!)
+        Me.txtPassword.Location = New System.Drawing.Point(49, 235)
+        Me.txtPassword.Multiline = True
+        Me.txtPassword.PasswordChar = "*"
         Me.txtPassword.Name = "txtPassword"
-        Me.txtPassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.txtPassword.Size = New System.Drawing.Size(320, 25)
+        Me.txtPassword.Size = New System.Drawing.Size(350, 30)
         Me.txtPassword.TabIndex = 2
         '
         'btnLogin
         '
-        Me.btnLogin.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(123, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.btnLogin.BackColor = System.Drawing.Color.FromArgb(CType(CType(41, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(185, Byte), Integer))
         Me.btnLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnLogin.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold)
+        Me.btnLogin.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Bold)
         Me.btnLogin.ForeColor = System.Drawing.Color.White
-        Me.btnLogin.Location = New System.Drawing.Point(40, 220)
+        Me.btnLogin.Location = New System.Drawing.Point(49, 300)
         Me.btnLogin.Name = "btnLogin"
-        Me.btnLogin.Size = New System.Drawing.Size(150, 40)
+        Me.btnLogin.Size = New System.Drawing.Size(350, 45)
         Me.btnLogin.TabIndex = 3
         Me.btnLogin.Text = "LOGIN"
         Me.btnLogin.UseVisualStyleBackColor = False
         '
-        'btnCancel
+        'Label5
         '
-        Me.btnCancel.BackColor = System.Drawing.Color.FromArgb(CType(CType(220, Byte), Integer), CType(CType(53, Byte), Integer), CType(CType(69, Byte), Integer))
-        Me.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnCancel.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.btnCancel.ForeColor = System.Drawing.Color.White
-        Me.btnCancel.Location = New System.Drawing.Point(210, 220)
-        Me.btnCancel.Name = "btnCancel"
-        Me.btnCancel.Size = New System.Drawing.Size(150, 40)
-        Me.btnCancel.TabIndex = 4
-        Me.btnCancel.Text = "CANCEL"
-        Me.btnCancel.UseVisualStyleBackColor = False
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(100, 370)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Text = "Don't have an account?"
+        '
+        'lblRegisterLink
+        '
+        Me.lblRegisterLink.AutoSize = True
+        Me.lblRegisterLink.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.lblRegisterLink.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
+        Me.lblRegisterLink.ForeColor = System.Drawing.Color.FromArgb(CType(CType(41, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(185, Byte), Integer))
+        Me.lblRegisterLink.Location = New System.Drawing.Point(240, 370)
+        Me.lblRegisterLink.Name = "lblRegisterLink"
+        Me.lblRegisterLink.Text = "Sign Up"
         '
         'frmLogin
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(48, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(484, 381)
-        Me.Controls.Add(Me.Panel1)
+        Me.ClientSize = New System.Drawing.Size(750, 450)
+        Me.Controls.Add(Me.pnlRight)
+        Me.Controls.Add(Me.pnlLeft)
+        Me.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "frmLogin"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Login"
-        Me.Panel1.ResumeLayout(False)
-        Me.Panel1.PerformLayout()
+        Me.pnlLeft.ResumeLayout(False)
+        Me.pnlLeft.PerformLayout()
+        Me.pnlRight.ResumeLayout(False)
+        Me.pnlRight.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
 
-    Friend WithEvents Panel1 As Panel
+    Friend WithEvents pnlLeft As Panel
+    Friend WithEvents pnlRight As Panel
+    Friend WithEvents lblBrand As Label
+    Friend WithEvents Label6 As Label
     Friend WithEvents lblTitle As Label
-    Friend WithEvents lblUser As Label
-    Friend WithEvents lblPass As Label
     Friend WithEvents txtUsername As TextBox
+    Friend WithEvents Label1 As Label
+    Friend WithEvents Label2 As Label
     Friend WithEvents txtPassword As TextBox
     Friend WithEvents btnLogin As Button
-    Friend WithEvents btnCancel As Button
+    Friend WithEvents Label5 As Label
+    Friend WithEvents lblRegisterLink As Label
+    Friend WithEvents btnClose As Button
 End Class
