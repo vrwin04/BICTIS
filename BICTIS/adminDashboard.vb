@@ -2,25 +2,39 @@
 
 Public Class adminDashboard
     Private Sub adminDashboard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        lblPageTitle.Text = "Dashboard - " & Session.CurrentUserRole
-        LoadStats()
-        LoadChart()
+        lblPageTitle.Text = "Administrator Control Panel"
+        LoadStatistics()
+        LoadIncidentChart()
     End Sub
 
-    Private Sub LoadStats()
-        lblTotalUsers.Text = Session.GetCount("SELECT COUNT(*) FROM tbl_Users WHERE Role='User'").ToString()
-        lblPendingCases.Text = Session.GetCount("SELECT COUNT(*) FROM tbl_Incidents WHERE Status='Pending'").ToString()
+    Private Sub LoadStatistics()
+        ' 1. Total Residents (Users)
+        Dim totalUsers As Integer = Session.GetCount("SELECT COUNT(*) FROM tbl_Users WHERE Role='User'")
+        lblTotalUsers.Text = totalUsers.ToString()
+
+        ' 2. Pending Cases (Critical for blocking clearances)
+        Dim pendingCases As Integer = Session.GetCount("SELECT COUNT(*) FROM tbl_Incidents WHERE Status='Pending'")
+        lblPendingCases.Text = pendingCases.ToString()
+
+        ' Visual Alert Logic
+        If pendingCases > 0 Then
+            pnlCard2.BackColor = Color.MistyRose
+            lblPendingCases.ForeColor = Color.DarkRed
+        Else
+            pnlCard2.BackColor = Color.White
+            lblPendingCases.ForeColor = Color.Green
+        End If
     End Sub
 
-    Private Sub LoadChart()
-        ' Fetch Data: Count incidents by TYPE (e.g., Noise, Theft)
+    Private Sub LoadIncidentChart()
+        ' Graph: Incidents by Type
         Dim query As String = "SELECT IncidentType, COUNT(*) as Count FROM tbl_Incidents GROUP BY IncidentType"
         Dim dt As DataTable = Session.GetDataTable(query)
 
         chartIncidents.Series.Clear()
         Dim series As New Series("Incidents")
-        series.ChartType = SeriesChartType.Column ' Bar Chart
-        series.Color = Color.FromArgb(41, 128, 185)
+        series.ChartType = SeriesChartType.Pie
+        series.IsValueShownAsLabel = True
 
         For Each row As DataRow In dt.Rows
             series.Points.AddXY(row("IncidentType").ToString(), row("Count"))
@@ -28,20 +42,31 @@ Public Class adminDashboard
 
         chartIncidents.Series.Add(series)
         chartIncidents.Titles.Clear()
-        chartIncidents.Titles.Add("Case Distribution by Type")
+        chartIncidents.Titles.Add("Case Distribution")
     End Sub
 
+    ' --- NAVIGATION ---
+
     Private Sub btnBlotter_Click(sender As Object, e As EventArgs) Handles btnBlotter.Click
+        ' Open the Incident Manager
         Dim frm As New frmBlotter()
         frm.ShowDialog()
-        LoadStats() ' Refresh when they come back
-        LoadChart()
+        LoadStatistics() ' Refresh data when they return
+        LoadIncidentChart()
+    End Sub
+
+    Private Sub btnResidents_Click(sender As Object, e As EventArgs) Handles btnResidents.Click
+        ' Reuse the User List form (since Residents = Users)
+        ' Create frmManageResidents if you haven't, or just show a grid here.
+        MessageBox.Show("Resident Management Module loading...", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
     Private Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
-        Session.CurrentUserID = 0
-        Dim login As New frmLogin()
-        login.Show()
-        Me.Close()
+        If MessageBox.Show("Are you sure you want to sign out?", "Confirm Logout", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Session.CurrentUserID = 0
+            Dim login As New frmLogin()
+            login.Show()
+            Me.Close()
+        End If
     End Sub
 End Class
